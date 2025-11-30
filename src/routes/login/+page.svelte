@@ -1,5 +1,6 @@
 <script lang="ts">
     import { login, register } from "$lib/api.remote";
+    import { goto } from "$app/navigation";
 
     let mode = $state<"login" | "register">("login");
     let username = $state("");
@@ -49,15 +50,22 @@
             message = result.message;
 
             // Clear form on successful registration
-            if (success && mode === "register") {
-                setTimeout(() => {
-                    mode = "login";
-                    username = "";
-                    password = "";
-                    confirmPassword = "";
-                    email = "";
-                    message = "Registration successful! Please login.";
-                }, 2000);
+            if (success) {
+                if (mode === "register") {
+                    setTimeout(() => {
+                        mode = "login";
+                        username = "";
+                        password = "";
+                        confirmPassword = "";
+                        email = "";
+                        message = "Registration successful! Please login.";
+                    }, 2000);
+                } else {
+                    // Redirect to dashboard on successful login
+                    setTimeout(() => {
+                        goto("/dashboard");
+                    }, 1000);
+                }
             }
         } catch (error) {
             success = false;
