@@ -1,10 +1,10 @@
 <script lang="ts">
-    import { login, register } from "$lib/api.remote";
+    import { login, register, selectCustomer } from "$lib/api.remote";
     import { goto } from "$app/navigation";
     import { auth } from "$lib/stores";
     import { _ } from "$lib/i18n";
 
-    let mode = $state<"login" | "register">("login");
+    let mode = $state<"login" | "register" | "select-customer">("login");
     let username = $state("");
     let password = $state("");
     let confirmPassword = $state("");
@@ -13,14 +13,70 @@
     let success = $state(false);
     let loading = $state(false);
 
+    // Customer selection state
+    let customers = $state<any[]>([]);
+    let selectedCustomerId = $state<number | null>(null);
+
     function toggleMode() {
         mode = mode === "login" ? "register" : "login";
         message = "";
         success = false;
+        customers = [];
+        selectedCustomerId = null;
+    }
+
+    async function handleCustomerSelection() {
+        if (!selectedCustomerId) {
+            message = "Please select a customer";
+            success = false;
+            return;
+        }
+
+        loading = true;
+        message = "";
+
+        try {
+            const result = await selectCustomer({
+                username,
+                customerId: selectedCustomerId,
+            });
+
+            success = result.success;
+            message = result.message;
+
+            if (success && result.accessToken && result.user) {
+                auth.login(
+                    {
+                        username: result.user.username,
+                        email: result.user.email,
+                        role: result.user.role || "User",
+                        name: result.user.name || result.user.username,
+                        customerId: result.user.customerId,
+                        customerName: result.user.customerName,
+                    },
+                    result.accessToken,
+                );
+                setTimeout(() => {
+                    goto("/dashboard");
+                }, 1000);
+            }
+        } catch (error) {
+            success = false;
+            message = "An error occurred during customer selection.";
+            console.error(error);
+        } finally {
+            loading = false;
+        }
     }
 
     async function handleSubmit(event: Event) {
         event.preventDefault();
+
+        if (mode === "select-customer") {
+            await handleCustomerSelection();
+            return;
+        }
+
         loading = true;
         message = "";
         success = false;
@@ -62,6 +118,8 @@
                                 email: result.user.email,
                                 role: result.user.role || "User",
                                 name: result.user.name || result.user.username,
+                                customerId: result.user.customerId,
+                                customerName: result.user.customerName,
                             },
                             result.accessToken,
                         );
@@ -80,14 +138,26 @@
                         }, 2000);
                     }
                 } else {
-                    // Login: Store JWT token and user data
-                    if (result.accessToken && result.user) {
+                    // Login flow
+                    if (result.requiresCustomerSelection && result.customers) {
+                        // Multi-customer flow: switch to selection mode
+                        customers = result.customers;
+                        mode = "select-customer";
+                        // Pre-select primary customer if available
+                        const primary = customers.find((c) => c.isPrimary);
+                        if (primary) {
+                            selectedCustomerId = primary.customerId;
+                        }
+                    } else if (result.accessToken && result.user) {
+                        // Single customer or direct login
                         auth.login(
                             {
                                 username: result.user.username,
                                 email: result.user.email,
                                 role: result.user.role || "User",
                                 name: result.user.name || result.user.username,
+                                customerId: result.user.customerId,
+                                customerName: result.user.customerName,
                             },
                             result.accessToken,
                         );
@@ -129,72 +199,117 @@
                 <span class="brand">StarLight</span><span class="erp">ERP</span>
             </h1>
             <p class="mode-title">
-                {mode === "login" ? "Sign In" : "Create Account"}
+                {#if mode === "login"}
+                    Sign In
+                {:else if mode === "register"}
+                    Create Account
+                {:else}
+                    Select Customer
+                {/if}
             </p>
         </div>
 
         <form onsubmit={handleSubmit} class="login-form">
-            <div class="form-group">
-                <label for="username"
-                    >Username<span class="required">*</span></label
-                >
-                <input
-                    type="text"
-                    id="username"
-                    bind:value={username}
-                    required
-                    disabled={loading}
-                />
-            </div>
-
-            {#if mode === "register"}
+            {#if mode === "select-customer"}
+                <div class="customer-list">
+                    {#each customers as customer}
+                        <label
+                            class="customer-card {selectedCustomerId ===
+                            customer.customerId
+                                ? 'selected'
+                                : ''}"
+                        >
+                            <input
+                                type="radio"
+                                name="customer"
+                                value={customer.customerId}
+                                bind:group={selectedCustomerId}
+                            />
+                            <div class="customer-info">
+                                <div class="customer-name">
+                                    {customer.customerName}
+                                </div>
+                                <div class="customer-details">
+                                    <span class="badge category"
+                                        >{customer.customerCategory}</span
+                                    >
+                                    <span class="badge type"
+                                        >{customer.customerType}</span
+                                    >
+                                    {#if customer.isPrimary}
+                                        <span class="badge primary"
+                                            >Primary</span
+                                        >
+                                    {/if}
+                                </div>
+                            </div>
+                        </label>
+                    {/each}
+                </div>
+            {:else}
                 <div class="form-group">
-                    <label for="email"
-                        >Email<span class="required">*</span></label
+                    <label for="username"
+                        >Username<span class="required">*</span></label
                     >
                     <input
-                        type="email"
-                        id="email"
-                        bind:value={email}
+                        type="text"
+                        id="username"
+                        bind:value={username}
                         required
                         disabled={loading}
-                        placeholder="your@email.com"
                     />
                 </div>
-            {/if}
 
-            <div class="form-group">
-                <label for="password"
-                    >Password<span class="required">*</span></label
-                >
-                <input
-                    type="password"
-                    id="password"
-                    bind:value={password}
-                    required
-                    disabled={loading}
-                />
                 {#if mode === "register"}
-                    <small class="password-hint">
-                        Must be 8+ characters with uppercase, lowercase, number,
-                        and special character
-                    </small>
+                    <div class="form-group">
+                        <label for="email"
+                            >Email<span class="required">*</span></label
+                        >
+                        <input
+                            type="email"
+                            id="email"
+                            bind:value={email}
+                            required
+                            disabled={loading}
+                            placeholder="your@email.com"
+                        />
+                    </div>
                 {/if}
-            </div>
 
-            {#if mode === "register"}
                 <div class="form-group">
-                    <label for="confirmPassword"
-                        >Confirm Password<span class="required">*</span></label
+                    <label for="password"
+                        >Password<span class="required">*</span></label
                     >
                     <input
                         type="password"
-                        id="confirmPassword"
-                        bind:value={confirmPassword}
+                        id="password"
+                        bind:value={password}
                         required
                         disabled={loading}
                     />
+                    {#if mode === "register"}
+                        <small class="password-hint">
+                            Must be 8+ characters with uppercase, lowercase,
+                            number, and special character
+                        </small>
+                    {/if}
                 </div>
+
+                {#if mode === "register"}
+                    <div class="form-group">
+                        <label for="confirmPassword"
+                            >Confirm Password<span class="required">*</span
+                            ></label
+                        >
+                        <input
+                            type="password"
+                            id="confirmPassword"
+                            bind:value={confirmPassword}
+                            required
+                            disabled={loading}
+                        />
+                    </div>
+                {/if}
             {/if}
 
             {#if mode === "login"}
@@ -208,9 +323,19 @@
 
             <button type="submit" class="sign-in-btn" disabled={loading}>
                 {#if loading}
-                    {mode === "login" ? "Signing in..." : "Creating account..."}
+                    {#if mode === "login"}
+                        Signing in...
+                    {:else if mode === "register"}
+                        Creating account...
+                    {:else}
+                        Selecting...
+                    {/if}
+                {:else if mode === "login"}
+                    Sign In
+                {:else if mode === "register"}
+                    Create Account
                 {:else}
-                    {mode === "login" ? "Sign In" : "Create Account"}
+                    Continue
                 {/if}
             </button>
 
@@ -220,18 +345,20 @@
                 </div>
             {/if}
 
-            <div class="mode-toggle">
-                <button
-                    type="button"
-                    class="toggle-btn"
-                    onclick={toggleMode}
-                    disabled={loading}
-                >
-                    {mode === "login"
-                        ? "Don't have an account? Sign Up"
-                        : "Already have an account? Sign In"}
-                </button>
-            </div>
+            {#if mode !== "select-customer"}
+                <div class="mode-toggle">
+                    <button
+                        type="button"
+                        class="toggle-btn"
+                        onclick={toggleMode}
+                        disabled={loading}
+                    >
+                        {mode === "login"
+                            ? "Don't have an account? Sign Up"
+                            : "Already have an account? Sign In"}
+                    </button>
+                </div>
+            {/if}
         </form>
     </div>
 </div>
@@ -465,5 +592,82 @@
     .toggle-btn:disabled {
         opacity: 0.5;
         cursor: not-allowed;
+    }
+
+    /* Customer Selection Styles */
+    .customer-list {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+        max-height: 300px;
+        overflow-y: auto;
+    }
+
+    .customer-card {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding: 12px;
+        border: 1px solid #d9d9d9;
+        border-radius: 6px;
+        cursor: pointer;
+        transition: all 0.2s;
+    }
+
+    .customer-card:hover {
+        border-color: #2ba3b4;
+        background-color: #f0f8fa;
+    }
+
+    .customer-card.selected {
+        border-color: #1a7a8a;
+        background-color: #e6f2f5;
+        box-shadow: 0 0 0 1px #1a7a8a;
+    }
+
+    .customer-card input[type="radio"] {
+        margin: 0;
+        height: 16px;
+        width: 16px;
+    }
+
+    .customer-info {
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+    }
+
+    .customer-name {
+        font-weight: 600;
+        color: #32363a;
+    }
+
+    .customer-details {
+        display: flex;
+        gap: 6px;
+        flex-wrap: wrap;
+    }
+
+    .badge {
+        font-size: 10px;
+        padding: 2px 6px;
+        border-radius: 4px;
+        font-weight: 600;
+        text-transform: uppercase;
+    }
+
+    .badge.category {
+        background-color: #e8f0fe;
+        color: #1967d2;
+    }
+
+    .badge.type {
+        background-color: #fce8e6;
+        color: #c5221f;
+    }
+
+    .badge.primary {
+        background-color: #e6f4ea;
+        color: #137333;
     }
 </style>

@@ -142,6 +142,34 @@ export const register = command(
     }
 );
 
+export const selectCustomer = command(
+    v.object({
+        username: v.string(),
+        customerId: v.number()
+    }),
+    async ({ username, customerId }) => {
+        try {
+            const response = await fetch(`${BACKEND_URL}/api/auth/select-customer`, {
+                method: 'POST',
+                credentials: 'include',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ username, customerId })
+            });
+
+            const data = await response.json();
+            return data;
+        } catch (error) {
+            console.error('Select customer error:', error);
+            return {
+                success: false,
+                message: 'Unable to connect to server'
+            };
+        }
+    }
+);
+
 export const logout = command(
     v.object({}),
     async () => {

@@ -7,6 +7,8 @@ interface User {
     role: string;
     name?: string;
     phone?: string;
+    customerId?: number;
+    customerName?: string;
 }
 
 interface AuthState {

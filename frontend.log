@@ -1,0 +1,11 @@
+
+> temp-frontend@0.0.1 dev
+> vite dev --port 5173 --host
+
+
+  VITE v7.2.4  ready in 1209 ms
+
+  ➜  Local:   https://localhost:5173/
+  ➜  Local:   https://starlighterp.com:5173/
+  ➜  Network: https://194.164.151.95:5173/
+  ➜  press h + enter to show help
