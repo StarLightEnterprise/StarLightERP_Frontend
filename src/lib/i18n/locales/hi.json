@@ -1,0 +1,95 @@
+{
+    "nav": {
+        "dashboard": "डैशबोर्ड",
+        "students": "छात्र",
+        "teachers": "शिक्षक",
+        "classes": "कक्षाएं",
+        "schedule": "समय सारणी",
+        "settings": "सेटिंग्स"
+    },
+    "auth": {
+        "signIn": "साइन इन करें",
+        "signUp": "साइन अप करें",
+        "createAccount": "खाता बनाएं",
+        "username": "उपयोगकर्ता नाम",
+        "email": "ईमेल",
+        "password": "पासवर्ड",
+        "confirmPassword": "पासवर्ड की पुष्टि करें",
+        "forgotPassword": "पासवर्ड भूल गए?",
+        "needHelp": "साइन इन में मदद चाहिए?",
+        "helpCenter": "सहायता केंद्र",
+        "dontHaveAccount": "खाता नहीं है? साइन अप करें",
+        "alreadyHaveAccount": "पहले से खाता है? साइन इन करें",
+        "signingIn": "साइन इन हो रहा है...",
+        "creatingAccount": "खाता बनाया जा रहा है...",
+        "passwordHint": "8+ अक्षर, बड़े अक्षर, छोटे अक्षर, संख्या और विशेष वर्ण होना चाहिए",
+        "passwordsDoNotMatch": "पासवर्ड मेल नहीं खाते",
+        "validEmailRequired": "वैध ईमेल आवश्यक है",
+        "registrationSuccess": "पंजीकरण सफल! कृपया लॉगिन करें।",
+        "loginError": "लॉगिन के दौरान एक त्रुटि हुई।",
+        "registrationError": "पंजीकरण के दौरान एक त्रुटि हुई।"
+    },
+    "user": {
+        "profile": "प्रोफ़ाइल",
+        "preferences": "प्राथमिकताएं",
+        "logout": "लॉगआउट",
+        "welcome": "वापसी पर स्वागत है, {name}!"
+    },
+    "dashboard": {
+        "home": {
+            "title": "वापसी पर स्वागत है, {name}!",
+            "subtitle": "आज आपके स्कूल में क्या हो रहा है।",
+            "totalStudents": "कुल छात्र",
+            "totalTeachers": "कुल शिक्षक",
+            "activeClasses": "सक्रिय कक्षाएं",
+            "attendance": "उपस्थिति"
+        },
+        "recentActivities": "हालिया गतिविधियाँ",
+        "quickActions": "त्वरित कार्य",
+        "viewAll": "सभी देखें",
+        "addStudent": "छात्र जोड़ें",
+        "collectFees": "शुल्क एकत्र करें",
+        "createEvent": "कार्यक्रम बनाएं",
+        "sendSMS": "एसएमएस भेजें"
+    },
+    "profile": {
+        "title": "प्रोफ़ाइल सेटिंग्स",
+        "personalInfo": "व्यक्तिगत जानकारी",
+        "contactInfo": "संपर्क जानकारी",
+        "name": "नाम",
+        "email": "ईमेल",
+        "phone": "फ़ोन",
+        "role": "भूमिका",
+        "saveChanges": "परिवर्तन सहेजें",
+        "cancel": "रद्द करें",
+        "updateSuccess": "प्रोफ़ाइल सफलतापूर्वक अपडेट हो गई",
+        "updateError": "प्रोफ़ाइल अपडेट करने में विफल"
+    },
+    "password": {
+        "resetPassword": "पासवर्ड रीसेट करें",
+        "currentPassword": "वर्तमान पासवर्ड",
+        "newPassword": "नया पासवर्ड",
+        "confirmNewPassword": "नए पासवर्ड की पुष्टि करें",
+        "update": "पासवर्ड अपडेट करें",
+        "resetSuccess": "पासवर्ड सफलतापूर्वक रीसेट हो गया",
+        "resetError": "पासवर्ड रीसेट करने में विफल"
+    },
+    "settings": {
+        "title": "सेटिंग्स",
+        "preferences": "प्राथमिकताएं",
+        "theme": "थीम",
+        "language": "भाषा",
+        "light": "लाइट",
+        "dark": "डार्क",
+        "selectLanguage": "भाषा चुनें"
+    },
+    "common": {
+        "search": "खोजें...",
+        "save": "सहेजें",
+        "cancel": "रद्द करें",
+        "edit": "संपादित करें",
+        "delete": "हटाएं",
+        "loading": "लोड हो रहा है...",
+        "required": "आवश्यक"
+    }
+}

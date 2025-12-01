@@ -1,0 +1,95 @@
+{
+    "nav": {
+        "dashboard": "डॅशबोर्ड",
+        "students": "विद्यार्थी",
+        "teachers": "शिक्षक",
+        "classes": "वर्ग",
+        "schedule": "वेळापत्रक",
+        "settings": "सेटिंग्ज"
+    },
+    "auth": {
+        "signIn": "साइन इन",
+        "signUp": "साइन अप",
+        "createAccount": "खाते तयार करा",
+        "username": "वापरकर्तानाव",
+        "email": "ईमेल",
+        "password": "पासवर्ड",
+        "confirmPassword": "पासवर्डची पुष्टी करा",
+        "forgotPassword": "पासवर्ड विसरलात?",
+        "needHelp": "साइन इन करण्यास मदत हवी आहे?",
+        "helpCenter": "सहाय्य केंद्र",
+        "dontHaveAccount": "खाते नाही? साइन अप करा",
+        "alreadyHaveAccount": "आधीपासून खाते आहे? साइन इन करा",
+        "signingIn": "साइन इन होत आहे...",
+        "creatingAccount": "खाते तयार करत आहे...",
+        "passwordHint": "८+ वर्ण, मोठी अक्षरे, लहान अक्षरे, संख्या आणि विशेष वर्ण असावेत",
+        "passwordsDoNotMatch": "पासवर्ड जुळत नाहीत",
+        "validEmailRequired": "वैध ईमेल आवश्यक आहे",
+        "registrationSuccess": "नोंदणी यशस्वी झाली! कृपया लॉगिन करा.",
+        "loginError": "लॉगिन दरम्यान त्रुटी आली.",
+        "registrationError": "नोंदणी दरम्यान त्रुटी आली."
+    },
+    "user": {
+        "profile": "प्रोफाइल",
+        "preferences": "प्राधान्ये",
+        "logout": "लॉगआउट",
+        "welcome": "परत स्वागत आहे, {name}!"
+    },
+    "dashboard": {
+        "home": {
+            "title": "परत स्वागत आहे, {name}!",
+            "subtitle": "आज तुमच्या शाळेत काय घडत आहे ते येथे आहे.",
+            "totalStudents": "एकूण विद्यार्थी",
+            "totalTeachers": "एकूण शिक्षक",
+            "activeClasses": "सक्रिय वर्ग",
+            "attendance": "उपस्थिती"
+        },
+        "recentActivities": "अलीकडील कार्यक्रम",
+        "quickActions": "द्रुत क्रिया",
+        "viewAll": "सर्व पहा",
+        "addStudent": "विद्यार्थी जोडा",
+        "collectFees": "शुल्क गोळा करा",
+        "createEvent": "कार्यक्रम तयार करा",
+        "sendSMS": "SMS पाठवा"
+    },
+    "profile": {
+        "title": "प्रोफाइल सेटिंग्ज",
+        "personalInfo": "वैयक्तिक माहिती",
+        "contactInfo": "संपर्क माहिती",
+        "name": "नाव",
+        "email": "ईमेल",
+        "phone": "फोन",
+        "role": "भूमिका",
+        "saveChanges": "बदल जतन करा",
+        "cancel": "रद्द करा",
+        "updateSuccess": "प्रोफाइल यशस्वीरित्या अपडेट केले",
+        "updateError": "प्रोफाइल अपडेट करण्यात अयशस्वी"
+    },
+    "password": {
+        "resetPassword": "पासवर्ड रीसेट करा",
+        "currentPassword": "सध्याचा पासवर्ड",
+        "newPassword": "नवीन पासवर्ड",
+        "confirmNewPassword": "नवीन पासवर्डची पुष्टी करा",
+        "update": "पासवर्ड अपडेट करा",
+        "resetSuccess": "पासवर्ड यशस्वीरित्या रीसेट केला",
+        "resetError": "पासवर्ड रीसेट करण्यात अयशस्वी"
+    },
+    "settings": {
+        "title": "सेटिंग्ज",
+        "preferences": "प्राधान्ये",
+        "theme": "थीम",
+        "language": "भाषा",
+        "light": "प्रकाश",
+        "dark": "गडद",
+        "selectLanguage": "भाषा निवडा"
+    },
+    "common": {
+        "search": "शोधा...",
+        "save": "जतन करा",
+        "cancel": "रद्द करा",
+        "edit": "संपादित करा",
+        "delete": "हटवा",
+        "loading": "लोड होत आहे...",
+        "required": "आवश्यक"
+    }
+}

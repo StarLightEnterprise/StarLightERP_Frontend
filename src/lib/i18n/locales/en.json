@@ -1,0 +1,95 @@
+{
+    "nav": {
+        "dashboard": "Dashboard",
+        "students": "Students",
+        "teachers": "Teachers",
+        "classes": "Classes",
+        "schedule": "Schedule",
+        "settings": "Settings"
+    },
+    "auth": {
+        "signIn": "Sign In",
+        "signUp": "Sign Up",
+        "createAccount": "Create Account",
+        "username": "Username",
+        "email": "Email",
+        "password": "Password",
+        "confirmPassword": "Confirm Password",
+        "forgotPassword": "Forgot Password?",
+        "needHelp": "Need sign in assistance?",
+        "helpCenter": "Help Center",
+        "dontHaveAccount": "Don't have an account? Sign Up",
+        "alreadyHaveAccount": "Already have an account? Sign In",
+        "signingIn": "Signing in...",
+        "creatingAccount": "Creating account...",
+        "passwordHint": "Must be 8+ characters with uppercase, lowercase, number, and special character",
+        "passwordsDoNotMatch": "Passwords do not match",
+        "validEmailRequired": "Valid email is required",
+        "registrationSuccess": "Registration successful! Please login.",
+        "loginError": "An error occurred during login.",
+        "registrationError": "An error occurred during registration."
+    },
+    "user": {
+        "profile": "Profile",
+        "preferences": "Preferences",
+        "logout": "Logout",
+        "welcome": "Welcome back, {name}!"
+    },
+    "dashboard": {
+        "home": {
+            "title": "Welcome back, {name}!",
+            "subtitle": "Here's what's happening in your school today.",
+            "totalStudents": "Total Students",
+            "totalTeachers": "Total Teachers",
+            "activeClasses": "Active Classes",
+            "attendance": "Attendance"
+        },
+        "recentActivities": "Recent Activities",
+        "quickActions": "Quick Actions",
+        "viewAll": "View All",
+        "addStudent": "Add Student",
+        "collectFees": "Collect Fees",
+        "createEvent": "Create Event",
+        "sendSMS": "Send SMS"
+    },
+    "profile": {
+        "title": "Profile Settings",
+        "personalInfo": "Personal Information",
+        "contactInfo": "Contact Information",
+        "name": "Name",
+        "email": "Email",
+        "phone": "Phone",
+        "role": "Role",
+        "saveChanges": "Save Changes",
+        "cancel": "Cancel",
+        "updateSuccess": "Profile updated successfully",
+        "updateError": "Failed to update profile"
+    },
+    "password": {
+        "resetPassword": "Reset Password",
+        "currentPassword": "Current Password",
+        "newPassword": "New Password",
+        "confirmNewPassword": "Confirm New Password",
+        "update": "Update Password",
+        "resetSuccess": "Password reset successfully",
+        "resetError": "Failed to reset password"
+    },
+    "settings": {
+        "title": "Settings",
+        "preferences": "Preferences",
+        "theme": "Theme",
+        "language": "Language",
+        "light": "Light",
+        "dark": "Dark",
+        "selectLanguage": "Select Language"
+    },
+    "common": {
+        "search": "Search...",
+        "save": "Save",
+        "cancel": "Cancel",
+        "edit": "Edit",
+        "delete": "Delete",
+        "loading": "Loading...",
+        "required": "Required"
+    }
+}

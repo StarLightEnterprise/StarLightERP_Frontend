@@ -1,6 +1,8 @@
 <script lang="ts">
     import { login, register } from "$lib/api.remote";
     import { goto } from "$app/navigation";
+    import { auth } from "$lib/stores";
+    import { _ } from "$lib/i18n";
 
     let mode = $state<"login" | "register">("login");
     let username = $state("");
@@ -49,22 +51,64 @@
             success = result.success;
             message = result.message;
 
-            // Clear form on successful registration
+            // Handle successful authentication
             if (success) {
                 if (mode === "register") {
-                    setTimeout(() => {
-                        mode = "login";
-                        username = "";
-                        password = "";
-                        confirmPassword = "";
-                        email = "";
-                        message = "Registration successful! Please login.";
-                    }, 2000);
+                    // After successful registration, auto-login with JWT
+                    if (result.accessToken && result.user) {
+                        auth.login(
+                            {
+                                username: result.user.username,
+                                email: result.user.email,
+                                role: result.user.role || "User",
+                                name: result.user.name || result.user.username,
+                            },
+                            result.accessToken,
+                        );
+                        setTimeout(() => {
+                            goto("/dashboard");
+                        }, 1000);
+                    } else {
+                        // Fallback: show success message and switch to login
+                        setTimeout(() => {
+                            mode = "login";
+                            username = "";
+                            password = "";
+                            confirmPassword = "";
+                            email = "";
+                            message = $_("auth.registrationSuccess");
+                        }, 2000);
+                    }
                 } else {
-                    // Redirect to dashboard on successful login
-                    setTimeout(() => {
-                        goto("/dashboard");
-                    }, 1000);
+                    // Login: Store JWT token and user data
+                    if (result.accessToken && result.user) {
+                        auth.login(
+                            {
+                                username: result.user.username,
+                                email: result.user.email,
+                                role: result.user.role || "User",
+                                name: result.user.name || result.user.username,
+                            },
+                            result.accessToken,
+                        );
+                        setTimeout(() => {
+                            goto("/dashboard");
+                        }, 1000);
+                    } else {
+                        // Fallback for old API response format
+                        auth.login(
+                            {
+                                username,
+                                email: result.email || email,
+                                role: result.role || "User",
+                                name: result.name || username,
+                            },
+                            result.accessToken || "",
+                        );
+                        setTimeout(() => {
+                            goto("/dashboard");
+                        }, 1000);
+                    }
                 }
             }
         } catch (error) {
@@ -80,9 +124,9 @@
 <div class="page-container">
     <div class="login-card">
         <div class="logo-section">
+            <img src="/logo.jpg" alt="StarLight ERP Logo" class="logo" />
             <h1 class="logo-text">
                 <span class="brand">StarLight</span><span class="erp">ERP</span>
-                <span class="star">⭐</span>
             </h1>
             <p class="mode-title">
                 {mode === "login" ? "Sign In" : "Create Account"}
@@ -205,7 +249,12 @@
         display: flex;
         align-items: center;
         justify-content: center;
-        background: #eff1f2; /* Light gray background */
+        background: linear-gradient(
+            135deg,
+            #1a4d6d 0%,
+            #1a7a8a 30%,
+            #2ba3b4 100%
+        );
         padding: 20px;
     }
 
@@ -232,6 +281,14 @@
         color: #32363a;
     }
 
+    .logo {
+        width: 120px;
+        height: 120px;
+        margin: 0 auto 20px;
+        display: block;
+        border-radius: 16px;
+    }
+
     .logo-text {
         margin: 0;
         font-size: 28px;
@@ -240,20 +297,15 @@
         align-items: center;
         justify-content: center;
         gap: 10px;
-        color: #0070d2;
-    }
-
-    .brand {
-        color: #008fd3; /* Lighter blue for brand */
-    }
-
-    .erp {
-        color: #008fd3;
-    }
-
-    .star {
-        font-size: 28px;
-        color: #f0ab00;
+        background: linear-gradient(
+            135deg,
+            #1a4d6d 0%,
+            #1a7a8a 50%,
+            #2ba3b4 100%
+        );
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
     }
 
     .login-form {
@@ -301,8 +353,8 @@
 
     input:focus {
         outline: none;
-        border-color: #0070d2;
-        box-shadow: 0 0 0 2px rgba(0, 112, 210, 0.2); /* Focus ring */
+        border-color: #2ba3b4;
+        box-shadow: 0 0 0 2px rgba(43, 163, 180, 0.2); /* Focus ring with teal */
     }
 
     input:disabled {
@@ -323,7 +375,7 @@
     }
 
     .help-link {
-        color: #0070d2;
+        color: #2ba3b4;
         text-decoration: none;
         display: flex;
         align-items: center;
@@ -333,7 +385,7 @@
 
     .help-link:hover {
         text-decoration: underline;
-        color: #005fb8;
+        color: #1a7a8a;
     }
 
     .shield-icon {
@@ -342,26 +394,29 @@
 
     .sign-in-btn {
         padding: 0 16px;
-        background-color: #0a6ed1; /* SAP Blue */
+        background: linear-gradient(135deg, #1a7a8a 0%, #2ba3b4 100%);
         color: white;
-        border: none;
-        border-radius: 8px; /* Slightly rounded */
+        border: 2px solid #d4a64f;
+        border-radius: 8px;
         font-size: 16px;
         font-weight: 700;
         cursor: pointer;
-        transition: background-color 0.2s;
-        height: 44px; /* Taller button */
+        transition: all 0.3s ease;
+        height: 44px;
         width: 100%;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     }
 
     .sign-in-btn:hover:not(:disabled) {
-        background-color: #0854a0;
+        background: linear-gradient(135deg, #2ba3b4 0%, #1a7a8a 100%);
+        transform: translateY(-2px);
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
     }
 
     .sign-in-btn:disabled {
         opacity: 0.5;
         cursor: not-allowed;
-        background-color: #0a6ed1;
+        transform: none;
     }
 
     .message {
@@ -395,7 +450,7 @@
     .toggle-btn {
         background: none;
         border: none;
-        color: #0070d2;
+        color: #2ba3b4;
         font-size: 14px;
         cursor: pointer;
         padding: 8px;
@@ -404,7 +459,7 @@
     }
 
     .toggle-btn:hover:not(:disabled) {
-        color: #005fb8;
+        color: #1a7a8a;
     }
 
     .toggle-btn:disabled {

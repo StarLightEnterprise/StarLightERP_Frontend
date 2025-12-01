@@ -1,0 +1,82 @@
+/* Light Theme */
+[data-theme="light"] {
+    /* Primary Color Palette */
+    --primary-hue: 190;
+    --primary-sat: 60%;
+    --primary-light: 50%;
+    
+    --color-primary: hsl(var(--primary-hue), var(--primary-sat), var(--primary-light));
+    --color-primary-dark: hsl(var(--primary-hue), var(--primary-sat), 40%);
+    --color-primary-light: hsl(var(--primary-hue), var(--primary-sat), 70%);
+    
+    /* Background Colors */
+    --color-bg-dark: hsl(0, 0%, 98%);
+    --color-bg-card: hsl(0, 0%, 100%);
+    --color-bg-lighter: hsl(0, 0%, 96%);
+    
+    /* Text Colors */
+    --color-text-main: hsl(0, 0%, 15%);
+    --color-text-muted: hsl(0, 0%, 50%);
+    
+    /* Status Colors */
+    --color-success: hsl(150, 60%, 45%);
+    --color-warning: hsl(35, 90%, 50%);
+    --color-danger: hsl(0, 70%, 55%);
+
+    /* Glassmorphism */
+    --glass-bg: rgba(0, 0, 0, 0.02);
+    --glass-border: rgba(0, 0, 0, 0.08);
+    --glass-shadow: 0 2px 16px 0 rgba(0, 0, 0, 0.08);
+
+    /* Login Page Gradient */
+    --login-gradient-start: #1a4d6d;
+    --login-gradient-mid: #1a7a8a;
+    --login-gradient-end: #2ba3b4;
+}
+
+/* Dark Theme (default) */
+[data-theme="dark"] {
+    /* Primary Color Palette */
+    --primary-hue: 250;
+    --primary-sat: 80%;
+    --primary-light: 60%;
+    
+    --color-primary: hsl(var(--primary-hue), var(--primary-sat), var(--primary-light));
+    --color-primary-dark: hsl(var(--primary-hue), var(--primary-sat), 40%);
+    --color-primary-light: hsl(var(--primary-hue), var(--primary-sat), 85%);
+    
+    /* Background Colors */
+    --color-bg-dark: hsl(220, 20%, 10%);
+    --color-bg-card: hsl(220, 20%, 14%);
+    --color-bg-lighter: hsl(220, 20%, 18%);
+    
+    /* Text Colors */
+    --color-text-main: hsl(0, 0%, 95%);
+    --color-text-muted: hsl(220, 10%, 70%);
+    
+    /* Status Colors */
+    --color-success: hsl(150, 60%, 45%);
+    --color-warning: hsl(35, 90%, 60%);
+    --color-danger: hsl(0, 70%, 60%);
+
+    /* Glassmorphism */
+    --glass-bg: rgba(255, 255, 255, 0.05);
+    --glass-border: rgba(255, 255, 255, 0.1);
+    --glass-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+
+    /* Login Page Gradient */
+    --login-gradient-start: #1a4d6d;
+    --login-gradient-mid: #1a7a8a;
+    --login-gradient-end: #2ba3b4;
+}
+
+/* Common Variables */
+:root {
+    /* Spacing & Radius */
+    --radius-sm: 8px;
+    --radius-md: 12px;
+    --radius-lg: 20px;
+    
+    --sidebar-width: 260px;
+    --header-height: 70px;
+}

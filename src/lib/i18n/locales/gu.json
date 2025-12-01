@@ -1,0 +1,95 @@
+{
+    "nav": {
+        "dashboard": "ડૅશબોર્ડ",
+        "students": "વિદ્યાર્થીઓ",
+        "teachers": "શિક્ષકો",
+        "classes": "વર્ગ",
+        "schedule": "સમયપત્રક",
+        "settings": "સેટિંગ્સ"
+    },
+    "auth": {
+        "signIn": "સાઇન ઇન",
+        "signUp": "સાઇન અપ",
+        "createAccount": "એકાઉન્ટ બનાવો",
+        "username": "વપરાશકર્તા નામ",
+        "email": "ઇમેઇલ",
+        "password": "પાસવર્ડ",
+        "confirmPassword": "પાસવર્ડની પુષ્ટિ કરો",
+        "forgotPassword": "પાસવર્ડ ભૂલી ગયા?",
+        "needHelp": "સાઇન ઇન કરવા માટે મદદ જોઈએ છે?",
+        "helpCenter": "સહાય કેન્દ્ર",
+        "dontHaveAccount": "એકાઉન્ટ નથી? સાઇન અપ કરો",
+        "alreadyHaveAccount": "પહેલેથી જ એકાઉન્ટ છે? સાઇન ઇન કરો",
+        "signingIn": "સાઇન ઇન થઈ રહ્યું છે...",
+        "creatingAccount": "એકાઉન્ટ બનાવી રહ્યું છે...",
+        "passwordHint": "8+ અક્ષરો, મોટા અક્ષરો, નાના અક્ષરો, સંખ્યા અને વિશિષ્ટ અક્ષર હોવા જોઈએ",
+        "passwordsDoNotMatch": "પાસવર્ડ મેળ ખાતા નથી",
+        "validEmailRequired": "માન્ય ઇમેઇલ જરૂરી છે",
+        "registrationSuccess": "નોંધણી સફળ થઈ! કૃપા કરીને લોગિન કરો.",
+        "loginError": "લોગિન દરમિયાન એક ભૂલ આવી.",
+        "registrationError": "નોંધણી દરમિયાન એક ભૂલ આવી."
+    },
+    "user": {
+        "profile": "પ્રોફાઇલ",
+        "preferences": "પસંદગીઓ",
+        "logout": "લોગઆઉટ",
+        "welcome": "ફરી સ્વાગત છે, {name}!"
+    },
+    "dashboard": {
+        "home": {
+            "title": "ફરી સ્વાગત છે, {name}!",
+            "subtitle": "આજે તમારી શાળામાં શું થઈ રહ્યું છે તે અહીં છે.",
+            "totalStudents": "કુલ વિદ્યાર્થીઓ",
+            "totalTeachers": "કુલ શિક્ષકો",
+            "activeClasses": "સક્રિય વર્ગ",
+            "attendance": "હાજરી"
+        },
+        "recentActivities": "તાજેતરની પ્રવૃત્તિઓ",
+        "quickActions": "ઝડપી ક્રિયાઓ",
+        "viewAll": "બધા જુઓ",
+        "addStudent": "વિદ્યાર્થી ઉમેરો",
+        "collectFees": "ફી એકત્ર કરો",
+        "createEvent": "ઇવેન્ટ બનાવો",
+        "sendSMS": "SMS મોકલો"
+    },
+    "profile": {
+        "title": "પ્રોફાઇલ સેટિંગ્સ",
+        "personalInfo": "વ્યક્તિગત માહિતી",
+        "contactInfo": "સંપર્ક માહિતી",
+        "name": "નામ",
+        "email": "ઇમેઇલ",
+        "phone": "ફોન",
+        "role": "ભૂમિકા",
+        "saveChanges": "ફેરફારો સાચવો",
+        "cancel": "રદ કરો",
+        "updateSuccess": "પ્રોફાઇલ સફળતાપૂર્વક અપડેટ થયું",
+        "updateError": "પ્રોફાઇલ અપડેટ કરવામાં નિષ્ફળ"
+    },
+    "password": {
+        "resetPassword": "પાસવર્ડ રીસેટ કરો",
+        "currentPassword": "વર્તમાન પાસવર્ડ",
+        "newPassword": "નવો પાસવર્ડ",
+        "confirmNewPassword": "નવા પાસવર્ડની પુષ્ટિ કરો",
+        "update": "પાસવર્ડ અપડેટ કરો",
+        "resetSuccess": "પાસવર્ડ સફળતાપૂર્વક રીસેટ થયો",
+        "resetError": "પાસવર્ડ રીસેટ કરવામાં નિષ્ફળ"
+    },
+    "settings": {
+        "title": "સેટિંગ્સ",
+        "preferences": "પસંદગીઓ",
+        "theme": "થીમ",
+        "language": "ભાષા",
+        "light": "પ્રકાશ",
+        "dark": "ઘેરો",
+        "selectLanguage": "ભાષા પસંદ કરો"
+    },
+    "common": {
+        "search": "શોધો...",
+        "save": "સાચવો",
+        "cancel": "રદ કરો",
+        "edit": "સંપાદિત કરો",
+        "delete": "કાઢી નાખો",
+        "loading": "લોડ થઈ રહ્યું છે...",
+        "required": "જરૂરી"
+    }
+}
