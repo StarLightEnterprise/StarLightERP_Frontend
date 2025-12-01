@@ -13,3 +13,18 @@ nohup: ignoring input
 https://svelte.dev/e/css_unused_selector
 1:21:30 PM [vite-plugin-svelte] src/lib/components/ThemeToggle.svelte:94:4 Unused CSS selector "[data-theme="light"] .moon"
 https://svelte.dev/e/css_unused_selector
+1:24:58 PM [vite] (client) page reload .svelte-kit/generated/client/nodes/0.js
+1:24:58 PM [vite] (client) page reload .svelte-kit/generated/client/nodes/1.js
+1:24:58 PM [vite] (client) page reload .svelte-kit/generated/client/nodes/2.js
+1:24:58 PM [vite] (client) page reload .svelte-kit/generated/client/nodes/4.js
+1:24:58 PM [vite] (client) page reload .svelte-kit/generated/client/nodes/7.js
+1:24:58 PM [vite] (client) page reload .svelte-kit/generated/client/app.js
+1:24:58 PM [vite] (client) page reload .svelte-kit/generated/client/matchers.js
+1:24:58 PM [vite] (ssr) page reload .svelte-kit/generated/server/internal.js
+1:24:58 PM [vite] (client) page reload .svelte-kit/generated/root.js
+1:24:58 PM [vite] (ssr) page reload .svelte-kit/generated/root.js
+1:24:58 PM [vite] (ssr) page reload .svelte-kit/generated/root.svelte
+1:25:00 PM [vite-plugin-svelte] src/lib/components/ThemeToggle.svelte:89:4 Unused CSS selector "[data-theme="light"] .sun"
+https://svelte.dev/e/css_unused_selector
+1:25:00 PM [vite-plugin-svelte] src/lib/components/ThemeToggle.svelte:94:4 Unused CSS selector "[data-theme="light"] .moon"
+https://svelte.dev/e/css_unused_selector
