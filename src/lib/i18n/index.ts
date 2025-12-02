@@ -54,4 +54,4 @@ export function setLanguage(lang: string) {
     locale.set(lang);
 }
 
-export { locale, _ } from 'svelte-i18n';
+export { locale, _, waitLocale, isLoading } from 'svelte-i18n';

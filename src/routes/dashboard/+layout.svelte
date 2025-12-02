@@ -132,7 +132,6 @@
         z-index: 10;
         width: 100%;
         box-sizing: border-box;
-        overflow-x: hidden;
     }
 
     .search-bar {

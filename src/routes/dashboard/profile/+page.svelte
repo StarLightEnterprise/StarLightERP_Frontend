@@ -3,6 +3,9 @@
     import { updateProfile } from "$lib/api.remote";
     import { _ } from "$lib/i18n";
 
+    import { onMount } from "svelte";
+    import { getUserProfile } from "$lib/api.remote";
+
     let name = $state($auth.user?.name || "");
     let email = $state($auth.user?.email || "");
     let phone = $state($auth.user?.phone || "");
@@ -10,13 +13,48 @@
     let success = $state(false);
     let loading = $state(false);
 
+    onMount(async () => {
+        try {
+            loading = true;
+            const token = $auth.accessToken;
+            if (token) {
+                const result = await getUserProfile({ token });
+                if (result.success && result.user) {
+                    name = result.user.name || "";
+                    email = result.user.email || "";
+                    phone = result.user.phone || "";
+
+                    // Update auth store with latest data
+                    auth.updateUser({
+                        name: result.user.name,
+                        email: result.user.email,
+                        phone: result.user.phone,
+                        role: result.user.role,
+                    });
+                }
+            }
+        } catch (error) {
+            console.error("Failed to load profile:", error);
+        } finally {
+            loading = false;
+        }
+    });
+
     async function handleSave() {
         loading = true;
         message = "";
         success = false;
 
         try {
-            const result = await updateProfile({ name, email, phone });
+            const token = $auth.accessToken;
+            if (!token) {
+                throw new Error("No access token available");
+            }
+            const result = await updateProfile({ name, email, phone, token });
+
+            // Small delay to ensure any intermediate messages are cleared
+            await new Promise((resolve) => setTimeout(resolve, 100));
+
             success = result.success;
             message =
                 result.message ||

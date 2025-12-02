@@ -6,6 +6,8 @@
 
 	let { children } = $props();
 
+	import { isLoading } from "$lib/i18n";
+
 	// Initialize i18n
 	initI18n();
 
@@ -17,4 +19,20 @@
 
 <svelte:head></svelte:head>
 
-{@render children()}
+{#if $isLoading}
+	<div class="loading-screen">Loading...</div>
+{:else}
+	{@render children()}
+{/if}
+
+<style>
+	.loading-screen {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		height: 100vh;
+		width: 100vw;
+		background-color: var(--color-bg);
+		color: var(--color-text);
+	}
+</style>

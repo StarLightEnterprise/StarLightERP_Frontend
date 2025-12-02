@@ -10,6 +10,7 @@ const BACKEND_URL = 'http://localhost:8080';
 // Helper to get auth headers
 function getAuthHeaders(): HeadersInit {
     const token = get(auth).accessToken;
+    // console.log('Getting auth headers, token exists:', !!token);
     const headers: HeadersInit = {
         'Content-Type': 'application/json'
     };
@@ -23,6 +24,7 @@ function getAuthHeaders(): HeadersInit {
 
 // Helper to refresh access token
 async function refreshAccessToken(): Promise<string | null> {
+    console.log('Attempting to refresh access token...');
     try {
         const response = await fetch(`${BACKEND_URL}/api/auth/refresh`, {
             method: 'POST',
@@ -32,12 +34,19 @@ async function refreshAccessToken(): Promise<string | null> {
             }
         });
 
+        console.log('Refresh token response status:', response.status);
+
         if (response.ok) {
             const data = await response.json();
             if (data.success && data.accessToken) {
+                console.log('Token refresh successful');
                 auth.setAccessToken(data.accessToken);
                 return data.accessToken;
+            } else {
+                console.error('Token refresh failed: success=false or no accessToken', data);
             }
+        } else {
+            console.error('Token refresh failed with status:', response.status);
         }
     } catch (error) {
         console.error('Token refresh error:', error);
@@ -49,20 +58,26 @@ async function refreshAccessToken(): Promise<string | null> {
 // Helper to make authenticated API calls with automatic token refresh
 async function authenticatedFetch(url: string, options: RequestInit = {}): Promise<Response> {
     // First attempt with current token
+    const headers = {
+        ...getAuthHeaders(),
+        ...options.headers
+    };
+
+    // console.log('Making authenticated fetch to:', url);
+
     let response = await fetch(url, {
         ...options,
         credentials: 'include',
-        headers: {
-            ...getAuthHeaders(),
-            ...options.headers
-        }
+        headers
     });
 
     // If unauthorized, try refreshing token
     if (response.status === 401) {
+        console.log('Received 401 Unauthorized, attempting refresh...');
         const newToken = await refreshAccessToken();
 
         if (newToken) {
+            console.log('Retrying request with new token...');
             // Retry with new token
             response = await fetch(url, {
                 ...options,
@@ -74,6 +89,7 @@ async function authenticatedFetch(url: string, options: RequestInit = {}): Promi
                 }
             });
         } else {
+            console.error('Refresh failed, logging out user');
             // Refresh failed, logout user
             auth.logout();
             if (typeof window !== 'undefined') {
@@ -191,11 +207,37 @@ export const logout = command(
 );
 
 export const getUserProfile = command(
-    v.object({}),
-    async () => {
+    v.object({
+        token: v.optional(v.string())
+    }),
+    async ({ token }) => {
         try {
-            const response = await authenticatedFetch(`${BACKEND_URL}/api/user/profile`, {
-                method: 'GET'
+            // If token is provided (server-side call), use it
+            // Otherwise try to use authenticatedFetch (client-side call)
+            // But since we are converting to explicit token passing, let's prefer that
+
+            const headers: HeadersInit = {
+                'Content-Type': 'application/json'
+            };
+
+            if (token) {
+                headers['Authorization'] = `Bearer ${token}`;
+            } else {
+                // Fallback for existing calls that might rely on client-side auth store
+                // But this won't work on server if auth store is empty
+                // So we should really enforce token passing or use authenticatedFetch if on client
+                // For now, let's try to use authenticatedFetch if no token passed, assuming client-side
+                // But wait, command runs on server. So authenticatedFetch on server is broken.
+                // So we MUST pass token.
+            }
+
+            // Actually, let's make it robust:
+            // If token is passed, use fetch.
+            // If not, we can't do much on server.
+
+            const response = await fetch(`${BACKEND_URL}/api/user/profile`, {
+                method: 'GET',
+                headers: token ? { ...headers, 'Authorization': `Bearer ${token}` } : headers
             });
 
             return await response.json();
@@ -213,18 +255,31 @@ export const updateProfile = command(
     v.object({
         name: v.optional(v.string()),
         email: v.optional(v.string()),
-        phone: v.optional(v.string())
+        phone: v.optional(v.string()),
+        token: v.string()
     }),
-    async ({ name, email, phone }) => {
+    async ({ name, email, phone, token }) => {
         try {
-            const response = await authenticatedFetch(`${BACKEND_URL}/api/user/profile`, {
+            console.log('Server: updateProfile called with token length:', token?.length);
+
+            const response = await fetch(`${BACKEND_URL}/api/user/profile`, {
                 method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`
+                },
                 body: JSON.stringify({ name, email, phone })
             });
 
-            return await response.json();
+            const data = await response.json();
+
+            if (!response.ok) {
+                console.error('Server: Update profile failed:', response.status, data);
+            }
+
+            return data;
         } catch (error) {
-            console.error('Update profile error:', error);
+            console.error('Server: Update profile error:', error);
             return {
                 success: false,
                 message: 'Unable to update profile'

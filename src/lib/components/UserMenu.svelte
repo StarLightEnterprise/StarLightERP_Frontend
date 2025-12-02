@@ -175,7 +175,7 @@
         box-shadow: var(--glass-shadow);
         min-width: 200px;
         padding: 0.5rem 0;
-        z-index: 100;
+        z-index: 1000;
         animation: slideDown 0.2s ease-out;
     }
 
