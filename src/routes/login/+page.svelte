@@ -670,4 +670,72 @@
         background-color: #e6f4ea;
         color: #137333;
     }
+
+    /* Mobile Responsive Styles */
+    @media (max-width: 768px) {
+        .page-container {
+            padding: 15px;
+        }
+
+        .login-card {
+            padding: 32px 24px;
+            max-width: 100%;
+        }
+
+        .logo {
+            width: 80px;
+            height: 80px;
+        }
+
+        .logo-text {
+            font-size: 24px;
+        }
+
+        .mode-title {
+            font-size: 16px;
+        }
+
+        .login-form {
+            gap: 20px;
+        }
+
+        .customer-list {
+            max-height: 250px;
+        }
+    }
+
+    @media (max-width: 480px) {
+        .page-container {
+            padding: 10px;
+        }
+
+        .login-card {
+            padding: 24px 16px;
+        }
+
+        .logo {
+            width: 60px;
+            height: 60px;
+        }
+
+        .logo-text {
+            font-size: 20px;
+            gap: 6px;
+        }
+
+        .mode-title {
+            font-size: 14px;
+        }
+
+        .sign-in-btn {
+            height: 40px;
+            font-size: 14px;
+        }
+
+        .help-text {
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 8px;
+        }
+    }
 </style>

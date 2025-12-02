@@ -14,7 +14,7 @@ const getInitialTheme = (): Theme => {
             return 'light';
         }
     }
-    return 'dark'; // Default to dark theme
+    return 'light'; // Default to light theme
 };
 
 function createThemeStore() {
@@ -24,7 +24,7 @@ function createThemeStore() {
         subscribe,
         toggle: () => {
             if (browser) {
-                const current = localStorage.getItem('theme') as Theme || 'dark';
+                const current = localStorage.getItem('theme') as Theme || 'light';
                 const newTheme: Theme = current === 'dark' ? 'light' : 'dark';
                 set(newTheme);
                 localStorage.setItem('theme', newTheme);

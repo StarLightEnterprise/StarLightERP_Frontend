@@ -53,38 +53,15 @@
 </script>
 
 <div class="dashboard-container">
-    <aside class="sidebar">
-        <div class="logo-area">
-            <span>StarLight<span style="color: white;">ERP</span></span>
-        </div>
-        <nav class="nav-links">
-            {#each navItems as item}
-                <a
-                    href={item.href}
-                    class="nav-item"
-                    class:active={$page.url.pathname === item.href}
-                >
-                    <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        width="24"
-                        height="24"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="currentColor"
-                        stroke-width="2"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                    >
-                        {@html item.icon}
-                    </svg>
-                    {$_(item.name)}
-                </a>
-            {/each}
-        </nav>
-    </aside>
-
     <main class="main-content">
         <header class="top-bar">
+            <div class="brand-area">
+                <img src="/logo.jpg" alt="StarLightERP Logo" class="logo" />
+                <span class="brand-text"
+                    >StarLight<span class="brand-highlight">ERP</span></span
+                >
+            </div>
+
             <div class="search-bar">
                 <svg
                     class="search-icon"
@@ -125,9 +102,167 @@
 </div>
 
 <style>
+    .dashboard-container {
+        min-height: 100vh;
+        background-color: var(--color-bg);
+        width: 100%;
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    .main-content {
+        display: flex;
+        flex-direction: column;
+        min-height: 100vh;
+        width: 100%;
+        box-sizing: border-box;
+    }
+
+    .top-bar {
+        height: 64px;
+        padding: 0;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        background-color: var(--color-bg-paper);
+        border-bottom: 1px solid var(--color-border);
+        position: sticky;
+        top: 0;
+        z-index: 10;
+        width: 100%;
+        box-sizing: border-box;
+        overflow-x: hidden;
+    }
+
+    .search-bar {
+        position: relative;
+        width: 400px;
+        max-width: 400px;
+        flex-shrink: 1;
+    }
+
+    .search-icon {
+        position: absolute;
+        left: 1rem;
+        top: 50%;
+        transform: translateY(-50%);
+        color: var(--color-text-muted);
+        width: 1.25rem;
+        height: 1.25rem;
+    }
+
+    .search-input {
+        width: 100%;
+        padding: 0.75rem 1rem 0.75rem 3rem;
+        border-radius: 9999px;
+        border: 1px solid var(--color-border);
+        background-color: var(--color-bg);
+        color: var(--color-text);
+        font-size: 0.875rem;
+        transition: all 0.2s;
+    }
+
+    .search-input:focus {
+        outline: none;
+        border-color: var(--color-primary);
+        box-shadow: 0 0 0 3px var(--color-primary-transparent);
+    }
+
     .header-actions {
         display: flex;
         align-items: center;
         gap: 1rem;
+    }
+
+    .content-area {
+        flex: 1;
+        padding: 2rem;
+        width: 100%;
+    }
+
+    .brand-area {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        padding: 0 1rem;
+    }
+
+    .logo {
+        width: 40px;
+        height: 40px;
+        border-radius: 8px;
+        object-fit: cover;
+    }
+
+    .brand-text {
+        font-size: 1.25rem;
+        font-weight: 700;
+        color: var(--color-text);
+        letter-spacing: -0.5px;
+    }
+
+    .brand-highlight {
+        color: var(--color-primary);
+    }
+
+    .header-actions {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        padding: 0 1rem;
+    }
+
+    /* Mobile Responsive Styles */
+    @media (max-width: 768px) {
+        .top-bar {
+            height: 56px;
+        }
+
+        .search-bar {
+            width: 200px;
+            max-width: 200px;
+        }
+
+        .brand-area {
+            padding: 0 0.5rem;
+        }
+
+        .brand-text {
+            font-size: 1rem;
+        }
+
+        .logo {
+            width: 32px;
+            height: 32px;
+        }
+
+        .header-actions {
+            gap: 0.5rem;
+            padding: 0 0.5rem;
+        }
+
+        .content-area {
+            padding: 1rem;
+        }
+    }
+
+    @media (max-width: 480px) {
+        .search-bar {
+            width: 120px;
+            max-width: 120px;
+        }
+
+        .brand-text {
+            display: none; /* Hide brand text on very small screens */
+        }
+
+        .brand-area {
+            padding: 0 0.5rem;
+        }
+
+        .header-actions {
+            padding: 0 0.5rem;
+        }
     }
 </style>

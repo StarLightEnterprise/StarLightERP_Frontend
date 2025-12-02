@@ -32,6 +32,13 @@
     --login-gradient-start: #1a4d6d;
     --login-gradient-mid: #1a7a8a;
     --login-gradient-end: #2ba3b4;
+
+    /* Mapped Variables */
+    --color-bg: var(--color-bg-dark);
+    --color-bg-paper: var(--color-bg-card);
+    --color-border: var(--glass-border);
+    --color-text: var(--color-text-main);
+    --color-secondary: hsl(var(--primary-hue), var(--primary-sat), 45%);
 }
 
 /* Dark Theme (default) */
@@ -68,6 +75,13 @@
     --login-gradient-start: #1a4d6d;
     --login-gradient-mid: #1a7a8a;
     --login-gradient-end: #2ba3b4;
+
+    /* Mapped Variables */
+    --color-bg: var(--color-bg-dark);
+    --color-bg-paper: var(--color-bg-card);
+    --color-border: var(--glass-border);
+    --color-text: var(--color-text-main);
+    --color-secondary: hsl(var(--primary-hue), var(--primary-sat), 70%);
 }
 
 /* Common Variables */
