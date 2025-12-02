@@ -8,6 +8,7 @@
     import UserMenu from "$lib/components/UserMenu.svelte";
     import ThemeToggle from "$lib/components/ThemeToggle.svelte";
     import LanguageSelector from "$lib/components/LanguageSelector.svelte";
+    import Breadcrumb from "$lib/components/Breadcrumb.svelte";
 
     let { children } = $props();
 
@@ -55,11 +56,14 @@
 <div class="dashboard-container">
     <main class="main-content">
         <header class="top-bar">
-            <div class="brand-area">
-                <img src="/logo.jpg" alt="StarLightERP Logo" class="logo" />
-                <span class="brand-text"
-                    >StarLight<span class="brand-highlight">ERP</span></span
-                >
+            <div class="brand-breadcrumb-area">
+                <button class="brand-area" onclick={() => goto("/dashboard")}>
+                    <img src="/logo.jpg" alt="StarLightERP Logo" class="logo" />
+                    <span class="brand-text"
+                        >StarLight<span class="brand-highlight">ERP</span></span
+                    >
+                </button>
+                <Breadcrumb />
             </div>
 
             <div class="search-bar">
@@ -180,11 +184,26 @@
         width: 100%;
     }
 
+    .brand-breadcrumb-area {
+        display: flex;
+        align-items: center;
+        gap: 0;
+    }
+
     .brand-area {
         display: flex;
         align-items: center;
         gap: 0.75rem;
-        padding: 0 1rem;
+        padding: 0.5rem 1rem;
+        background: none;
+        border: none;
+        cursor: pointer;
+        transition: all 0.2s;
+        border-radius: 8px;
+    }
+
+    .brand-area:hover {
+        background-color: var(--color-bg);
     }
 
     .logo {
@@ -223,8 +242,12 @@
             max-width: 200px;
         }
 
+        .brand-breadcrumb-area {
+            gap: 0;
+        }
+
         .brand-area {
-            padding: 0 0.5rem;
+            padding: 0.5rem;
         }
 
         .brand-text {
@@ -257,7 +280,7 @@
         }
 
         .brand-area {
-            padding: 0 0.5rem;
+            padding: 0.5rem;
         }
 
         .header-actions {

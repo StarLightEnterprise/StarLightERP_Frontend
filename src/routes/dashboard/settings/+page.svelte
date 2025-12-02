@@ -1,9 +1,15 @@
 <script lang="ts">
-    import { theme } from "$lib/stores";
+    import { theme, breadcrumbs } from "$lib/stores";
     import { locale } from "$lib/i18n";
     import { availableLanguages, setLanguage } from "$lib/i18n";
     import { _ } from "$lib/i18n";
     import { resetPassword } from "$lib/api.remote";
+    import { onMount } from "svelte";
+
+    // Set breadcrumb on mount
+    onMount(() => {
+        breadcrumbs.set([{ label: "Settings", href: "/dashboard/settings" }]);
+    });
 
     const currentTheme = $derived($theme);
     const currentLocale = $derived($locale || "en");

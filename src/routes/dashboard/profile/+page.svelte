@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { auth } from "$lib/stores";
+    import { auth, breadcrumbs } from "$lib/stores";
     import { updateProfile } from "$lib/api.remote";
     import { _ } from "$lib/i18n";
 
@@ -14,6 +14,9 @@
     let loading = $state(false);
 
     onMount(async () => {
+        // Set breadcrumb
+        breadcrumbs.set([{ label: "Profile", href: "/dashboard/profile" }]);
+
         try {
             loading = true;
             const token = $auth.accessToken;

@@ -1,7 +1,14 @@
 <script>
     import { _ } from "$lib/i18n";
+    import { breadcrumbs } from "$lib/stores";
+    import { onMount } from "svelte";
 
     let isEditing = false;
+
+    // Clear breadcrumbs on main dashboard
+    onMount(() => {
+        breadcrumbs.clear();
+    });
 
     function toggleEdit() {
         isEditing = !isEditing;
