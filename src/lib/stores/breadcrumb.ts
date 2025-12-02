@@ -1,19 +1,18 @@
 import { writable } from 'svelte/store';
 
-export interface Breadcrumb {
+export interface BreadcrumbItem {
     label: string;
-    href: string;
+    href?: string;
 }
 
 function createBreadcrumbStore() {
-    const { subscribe, set, update } = writable<Breadcrumb[]>([]);
+    const { subscribe, set, update } = writable<BreadcrumbItem[]>([]);
 
     return {
         subscribe,
-        set: (breadcrumbs: Breadcrumb[]) => set(breadcrumbs),
-        clear: () => set([]),
-        push: (breadcrumb: Breadcrumb) => update(crumbs => [...crumbs, breadcrumb]),
-        reset: () => set([])
+        set: (items: BreadcrumbItem[]) => set(items),
+        reset: () => set([]),
+        clear: () => set([])
     };
 }
 

@@ -11,11 +11,21 @@ export default defineConfig({
         baseURL: 'https://localhost:5173',
         trace: 'on-first-retry',
         ignoreHTTPSErrors: true,
+        video: 'on-first-retry',
+        screenshot: 'only-on-failure',
     },
     projects: [
         {
             name: 'chromium',
             use: { ...devices['Desktop Chrome'] },
+        },
+        {
+            name: 'firefox',
+            use: { ...devices['Desktop Firefox'] },
+        },
+        {
+            name: 'webkit',
+            use: { ...devices['Desktop Safari'] },
         },
     ],
     webServer: {
@@ -23,5 +33,6 @@ export default defineConfig({
         url: 'https://localhost:5173',
         reuseExistingServer: !process.env.CI,
         ignoreHTTPSErrors: true,
+        timeout: 120 * 1000,
     },
 });

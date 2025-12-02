@@ -1,106 +1,62 @@
 <script lang="ts">
-    import { breadcrumbs, type Breadcrumb } from "$lib/stores";
-    import { goto } from "$app/navigation";
+    import { breadcrumbs } from "$lib/stores/breadcrumb";
+    import { page } from "$app/stores";
+    import { _ } from "svelte-i18n";
 
-    let crumbs = $state<Breadcrumb[]>([]);
-
-    $effect(() => {
-        const unsubscribe = breadcrumbs.subscribe((value) => {
-            crumbs = value;
-        });
-        return unsubscribe;
-    });
-
-    function navigate(href: string) {
-        goto(href);
-    }
+    // Subscribe to breadcrumbs store
+    // We can also derive breadcrumbs from $page.url if we wanted automatic generation
+    // but explicit control via store is often more flexible for dynamic titles.
 </script>
 
-{#if crumbs.length > 0}
-    <nav class="breadcrumb-nav">
-        {#each crumbs as crumb, index}
-            {#if index > 0}
-                <svg
-                    class="separator"
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="16"
-                    height="16"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-width="2"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                >
-                    <polyline points="9 18 15 12 9 6"></polyline>
-                </svg>
-            {/if}
-            <button
-                class="breadcrumb-item"
-                class:active={index === crumbs.length - 1}
-                onclick={() => navigate(crumb.href)}
-            >
-                {crumb.label}
-            </button>
+<nav aria-label="Breadcrumb" class="breadcrumb-nav">
+    <ol class="breadcrumb-list">
+        <li class="breadcrumb-item">
+            <a href="/dashboard">{$_("common.dashboard") || "Dashboard"}</a>
+        </li>
+        {#each $breadcrumbs as item, i}
+            <li class="breadcrumb-separator">/</li>
+            <li class="breadcrumb-item" class:active={!item.href}>
+                {#if item.href}
+                    <a href={item.href}>{item.label}</a>
+                {:else}
+                    <span aria-current="page">{item.label}</span>
+                {/if}
+            </li>
         {/each}
-    </nav>
-{/if}
+    </ol>
+</nav>
 
 <style>
     .breadcrumb-nav {
-        display: flex;
-        align-items: center;
-        gap: 0.5rem;
-        padding: 0 1rem;
-    }
-
-    .separator {
-        color: var(--color-text-muted);
-        flex-shrink: 0;
-    }
-
-    .breadcrumb-item {
-        background: none;
-        border: none;
-        color: var(--color-text);
+        padding: 0.5rem 0;
+        margin-bottom: 1rem;
         font-size: 0.875rem;
-        font-weight: 500;
-        cursor: pointer;
-        padding: 0.25rem 0.5rem;
-        border-radius: 4px;
-        transition: all 0.2s;
-        white-space: nowrap;
     }
 
-    .breadcrumb-item:hover {
-        background-color: var(--color-bg);
-        color: var(--color-primary);
+    .breadcrumb-list {
+        display: flex;
+        flex-wrap: wrap;
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        align-items: center;
     }
 
-    .breadcrumb-item.active {
-        color: var(--color-primary);
-        cursor: default;
+    .breadcrumb-item a {
+        color: var(--primary-color, #007bff);
+        text-decoration: none;
     }
 
-    .breadcrumb-item.active:hover {
-        background-color: transparent;
+    .breadcrumb-item a:hover {
+        text-decoration: underline;
     }
 
-    /* Mobile Responsive */
-    @media (max-width: 768px) {
-        .breadcrumb-nav {
-            padding: 0 0.5rem;
-            gap: 0.25rem;
-        }
+    .breadcrumb-item.active span {
+        color: var(--text-color-secondary, #6c757d);
+    }
 
-        .breadcrumb-item {
-            font-size: 0.75rem;
-            padding: 0.25rem;
-        }
-
-        .separator {
-            width: 12px;
-            height: 12px;
-        }
+    .breadcrumb-separator {
+        margin: 0 0.5rem;
+        color: var(--text-color-muted, #adb5bd);
     }
 </style>
