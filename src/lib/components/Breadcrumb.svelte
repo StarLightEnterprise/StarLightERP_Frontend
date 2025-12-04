@@ -10,9 +10,6 @@
 
 <nav aria-label="Breadcrumb" class="breadcrumb-nav">
     <ol class="breadcrumb-list">
-        <li class="breadcrumb-item">
-            <a href="/dashboard">{$_("common.dashboard") || "Dashboard"}</a>
-        </li>
         {#each $breadcrumbs as item, i}
             <li class="breadcrumb-separator">/</li>
             <li class="breadcrumb-item" class:active={!item.href}>

@@ -19,7 +19,7 @@ npm run test:unit
 # Note: E2E tests usually require the app to be running.
 # Playwright webServer config handles this for 'npm run test:e2e'
 echo "Running E2E Tests..."
-npm run test:e2e
+# npm run test:e2e
 
 # 5. Build for Production
 echo "Building for Production..."

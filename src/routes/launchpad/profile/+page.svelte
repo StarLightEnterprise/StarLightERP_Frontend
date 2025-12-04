@@ -15,7 +15,7 @@
 
     onMount(async () => {
         // Set breadcrumb
-        breadcrumbs.set([{ label: "Profile", href: "/dashboard/profile" }]);
+        breadcrumbs.set([{ label: "Profile", href: "/launchpad/profile" }]);
 
         try {
             loading = true;

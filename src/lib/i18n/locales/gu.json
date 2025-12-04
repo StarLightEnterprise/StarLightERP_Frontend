@@ -1,6 +1,6 @@
 {
     "nav": {
-        "dashboard": "ડૅશબોર્ડ",
+        "launchpad": "ડૅશબોર્ડ",
         "students": "વિદ્યાર્થીઓ",
         "teachers": "શિક્ષકો",
         "classes": "વર્ગ",
@@ -35,7 +35,7 @@
         "logout": "લોગઆઉટ",
         "welcome": "ફરી સ્વાગત છે, {name}!"
     },
-    "dashboard": {
+    "launchpad": {
         "home": {
             "title": "ફરી સ્વાગત છે, {name}!",
             "subtitle": "આજે તમારી શાળામાં શું થઈ રહ્યું છે તે અહીં છે.",

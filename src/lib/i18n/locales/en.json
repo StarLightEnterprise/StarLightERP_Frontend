@@ -1,6 +1,6 @@
 {
     "nav": {
-        "dashboard": "Dashboard",
+        "launchpad": "Launchpad",
         "students": "Students",
         "teachers": "Teachers",
         "classes": "Classes",
@@ -35,7 +35,7 @@
         "logout": "Logout",
         "welcome": "Welcome back, {name}!"
     },
-    "dashboard": {
+    "launchpad": {
         "home": {
             "title": "Welcome back, {name}!",
             "subtitle": "Here's what's happening in your school today.",

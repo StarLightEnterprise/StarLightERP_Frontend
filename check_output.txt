@@ -1,0 +1,112 @@
+
+> temp-frontend@0.0.1 check
+> svelte-kit sync && svelte-check --tsconfig ./tsconfig.json
+
+`config.kit.csrf.checkOrigin` has been deprecated in favour of `csrf.trustedOrigins`. It will be removed in a future version
+Loading svelte-check in workspace: /home/upendra_verma/StarLightERP/StarLightERP_Frontend
+Getting Svelte diagnostics...
+
+`config.kit.csrf.checkOrigin` has been deprecated in favour of `csrf.trustedOrigins`. It will be removed in a future version
+/home/upendra_verma/StarLightERP/StarLightERP_Frontend/src/lib/stores/index.ts:6:15
+Error: '"./breadcrumb"' has no exported member named 'Breadcrumb'. Did you mean 'breadcrumbs'? 
+export type { Theme } from './theme';
+export type { Breadcrumb } from './breadcrumb';
+
+/home/upendra_verma/StarLightERP/StarLightERP_Frontend/src/lib/components/ThemeToggle.svelte:89:5
+Warn: Unused CSS selector "[data-theme="light"] .sun"
+https://svelte.dev/e/css_unused_selector (svelte)
+
+    [data-theme="light"] .sun {
+        opacity: 1;
+
+/home/upendra_verma/StarLightERP/StarLightERP_Frontend/src/lib/components/ThemeToggle.svelte:94:5
+Warn: Unused CSS selector "[data-theme="light"] .moon"
+https://svelte.dev/e/css_unused_selector (svelte)
+
+    [data-theme="light"] .moon {
+        opacity: 0;
+
+/home/upendra_verma/StarLightERP/StarLightERP_Frontend/src/routes/launchpad/+layout.svelte:91:5
+Error: `$:` is not allowed in runes mode, use `$derived` or `$effect` instead
+https://svelte.dev/e/legacy_reactive_statement_invalid (svelte)
+    // Check if we're on a child route (app is open)
+    $: isAppOpen = $page.url.pathname !== "/launchpad";
+
+/home/upendra_verma/StarLightERP/StarLightERP_Frontend/src/routes/launchpad/+layout.svelte:16:9
+Error: Variable 'apps' implicitly has type 'any[]' in some locations where its type cannot be determined. (ts)
+    /** @type {Array<{app_id: string, description: string, is_admin_app: boolean}>} */
+    let apps = [];
+    let loading = true;
+
+/home/upendra_verma/StarLightERP/StarLightERP_Frontend/src/routes/launchpad/+layout.svelte:19:9
+Error: Variable 'error' implicitly has type 'any' in some locations where its type cannot be determined. (ts)
+    /** @type {string | null} */
+    let error = null;
+    let isSuperUser = false;
+
+/home/upendra_verma/StarLightERP/StarLightERP_Frontend/src/routes/launchpad/+layout.svelte:82:24
+Error: Parameter 'appId' implicitly has an 'any' type. (ts)
+     */
+    function launchApp(appId, description) {
+        const route = appRoutes[appId];
+
+/home/upendra_verma/StarLightERP/StarLightERP_Frontend/src/routes/launchpad/+layout.svelte:82:31
+Error: Parameter 'description' implicitly has an 'any' type. (ts)
+     */
+    function launchApp(appId, description) {
+        const route = appRoutes[appId];
+
+/home/upendra_verma/StarLightERP/StarLightERP_Frontend/src/routes/launchpad/+layout.svelte:83:23
+Error: Element implicitly has an 'any' type because expression of type 'any' can't be used to index type '{ A000001: string; A000002: string; }'. (ts)
+    function launchApp(appId, description) {
+        const route = appRoutes[appId];
+        if (route) {
+
+/home/upendra_verma/StarLightERP/StarLightERP_Frontend/src/routes/launchpad/+layout.svelte:176:39
+Error: Variable 'error' implicitly has an 'any' type. (ts)
+                                </div>
+                            {:else if error}
+                                <div class="error-state">
+
+/home/upendra_verma/StarLightERP/StarLightERP_Frontend/src/routes/launchpad/+layout.svelte:189:44
+Error: Variable 'apps' implicitly has an 'any[]' type. (ts)
+                                <div class="apps-grid">
+                                    {#each apps as app (app.app_id)}
+                                        <button
+
+/home/upendra_verma/StarLightERP/StarLightERP_Frontend/src/routes/launchpad/+layout.svelte:199:56
+Error: Element implicitly has an 'any' type because expression of type 'any' can't be used to index type '{ A000001: string; A000002: string; }'. (ts)
+                                            <div class="icon-wrapper">
+                                                {@html appIcons[app.app_id] ||
+                                                    appIcons["A000001"]}
+
+/home/upendra_verma/StarLightERP/StarLightERP_Frontend/src/routes/launchpad/profile/+page.svelte:230:5
+Warn: Unused CSS selector "[data-theme="dark"] .message.success"
+https://svelte.dev/e/css_unused_selector (svelte)
+
+    [data-theme="dark"] .message.success {
+        background: hsla(150, 60%, 30%, 0.2);
+
+/home/upendra_verma/StarLightERP/StarLightERP_Frontend/src/routes/launchpad/profile/+page.svelte:242:5
+Warn: Unused CSS selector "[data-theme="dark"] .message.error"
+https://svelte.dev/e/css_unused_selector (svelte)
+
+    [data-theme="dark"] .message.error {
+        background: hsla(0, 70%, 40%, 0.2);
+
+/home/upendra_verma/StarLightERP/StarLightERP_Frontend/src/routes/launchpad/settings/+page.svelte:395:5
+Warn: Unused CSS selector "[data-theme="dark"] .message.success"
+https://svelte.dev/e/css_unused_selector (svelte)
+
+    [data-theme="dark"] .message.success {
+        background: hsla(150, 60%, 30%, 0.2);
+
+/home/upendra_verma/StarLightERP/StarLightERP_Frontend/src/routes/launchpad/settings/+page.svelte:407:5
+Warn: Unused CSS selector "[data-theme="dark"] .message.error"
+https://svelte.dev/e/css_unused_selector (svelte)
+
+    [data-theme="dark"] .message.error {
+        background: hsla(0, 70%, 40%, 0.2);
+
+====================================
+svelte-check found 10 errors and 6 warnings in 5 files

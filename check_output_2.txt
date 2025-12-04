@@ -1,0 +1,113 @@
+
+> temp-frontend@0.0.1 check
+> svelte-kit sync && svelte-check --tsconfig ./tsconfig.json
+
+`config.kit.csrf.checkOrigin` has been deprecated in favour of `csrf.trustedOrigins`. It will be removed in a future version
+Loading svelte-check in workspace: /home/upendra_verma/StarLightERP/StarLightERP_Frontend
+Getting Svelte diagnostics...
+
+`config.kit.csrf.checkOrigin` has been deprecated in favour of `csrf.trustedOrigins`. It will be removed in a future version
+/home/upendra_verma/StarLightERP/StarLightERP_Frontend/src/lib/components/ThemeToggle.svelte:89:5
+Warn: Unused CSS selector "[data-theme="light"] .sun"
+https://svelte.dev/e/css_unused_selector (svelte)
+
+    [data-theme="light"] .sun {
+        opacity: 1;
+
+/home/upendra_verma/StarLightERP/StarLightERP_Frontend/src/lib/components/ThemeToggle.svelte:94:5
+Warn: Unused CSS selector "[data-theme="light"] .moon"
+https://svelte.dev/e/css_unused_selector (svelte)
+
+    [data-theme="light"] .moon {
+        opacity: 0;
+
+/home/upendra_verma/StarLightERP/StarLightERP_Frontend/src/routes/launchpad/+layout.svelte:72:13
+Error: Type '"Unable to load apps. Please try again later."' is not assignable to type 'null'. (ts)
+            console.error("Error fetching apps:", err);
+            error = "Unable to load apps. Please try again later.";
+        } finally {
+
+/home/upendra_verma/StarLightERP/StarLightERP_Frontend/src/routes/launchpad/+layout.svelte:83:24
+Error: Parameter 'appId' implicitly has an 'any' type. (ts)
+     */
+    function launchApp(appId, description) {
+        const route = appRoutes[appId];
+
+/home/upendra_verma/StarLightERP/StarLightERP_Frontend/src/routes/launchpad/+layout.svelte:83:31
+Error: Parameter 'description' implicitly has an 'any' type. (ts)
+     */
+    function launchApp(appId, description) {
+        const route = appRoutes[appId];
+
+/home/upendra_verma/StarLightERP/StarLightERP_Frontend/src/routes/launchpad/+layout.svelte:84:23
+Error: Element implicitly has an 'any' type because expression of type 'any' can't be used to index type '{ A000001: string; A000002: string; }'. (ts)
+    function launchApp(appId, description) {
+        const route = appRoutes[appId];
+        if (route) {
+
+/home/upendra_verma/StarLightERP/StarLightERP_Frontend/src/routes/launchpad/+layout.svelte:190:61
+Error: Property 'app_id' does not exist on type 'never'. (ts)
+                                <div class="apps-grid">
+                                    {#each apps as app (app.app_id)}
+                                        <button
+
+/home/upendra_verma/StarLightERP/StarLightERP_Frontend/src/routes/launchpad/+layout.svelte:195:57
+Error: Property 'app_id' does not exist on type 'never'. (ts)
+                                                launchApp(
+                                                    app.app_id,
+                                                    app.description,
+
+/home/upendra_verma/StarLightERP/StarLightERP_Frontend/src/routes/launchpad/+layout.svelte:196:57
+Error: Property 'description' does not exist on type 'never'. (ts)
+                                                    app.app_id,
+                                                    app.description,
+                                                )}
+
+/home/upendra_verma/StarLightERP/StarLightERP_Frontend/src/routes/launchpad/+layout.svelte:200:56
+Error: Element implicitly has an 'any' type because expression of type 'any' can't be used to index type '{ A000001: string; A000002: string; }'. (ts)
+                                            <div class="icon-wrapper">
+                                                {@html appIcons[app.app_id] ||
+                                                    appIcons["A000001"]}
+
+/home/upendra_verma/StarLightERP/StarLightERP_Frontend/src/routes/launchpad/+layout.svelte:200:69
+Error: Property 'app_id' does not exist on type 'never'. (ts)
+                                            <div class="icon-wrapper">
+                                                {@html appIcons[app.app_id] ||
+                                                    appIcons["A000001"]}
+
+/home/upendra_verma/StarLightERP/StarLightERP_Frontend/src/routes/launchpad/+layout.svelte:204:55
+Error: Property 'description' does not exist on type 'never'. (ts)
+                                            <span class="label"
+                                                >{app.description}</span
+                                            >
+
+/home/upendra_verma/StarLightERP/StarLightERP_Frontend/src/routes/launchpad/profile/+page.svelte:230:5
+Warn: Unused CSS selector "[data-theme="dark"] .message.success"
+https://svelte.dev/e/css_unused_selector (svelte)
+
+    [data-theme="dark"] .message.success {
+        background: hsla(150, 60%, 30%, 0.2);
+
+/home/upendra_verma/StarLightERP/StarLightERP_Frontend/src/routes/launchpad/profile/+page.svelte:242:5
+Warn: Unused CSS selector "[data-theme="dark"] .message.error"
+https://svelte.dev/e/css_unused_selector (svelte)
+
+    [data-theme="dark"] .message.error {
+        background: hsla(0, 70%, 40%, 0.2);
+
+/home/upendra_verma/StarLightERP/StarLightERP_Frontend/src/routes/launchpad/settings/+page.svelte:395:5
+Warn: Unused CSS selector "[data-theme="dark"] .message.success"
+https://svelte.dev/e/css_unused_selector (svelte)
+
+    [data-theme="dark"] .message.success {
+        background: hsla(150, 60%, 30%, 0.2);
+
+/home/upendra_verma/StarLightERP/StarLightERP_Frontend/src/routes/launchpad/settings/+page.svelte:407:5
+Warn: Unused CSS selector "[data-theme="dark"] .message.error"
+https://svelte.dev/e/css_unused_selector (svelte)
+
+    [data-theme="dark"] .message.error {
+        background: hsla(0, 70%, 40%, 0.2);
+
+====================================
+svelte-check found 10 errors and 6 warnings in 4 files

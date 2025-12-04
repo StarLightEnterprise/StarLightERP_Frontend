@@ -1,6 +1,6 @@
 {
     "nav": {
-        "dashboard": "डॅशबोर्ड",
+        "launchpad": "डॅशबोर्ड",
         "students": "विद्यार्थी",
         "teachers": "शिक्षक",
         "classes": "वर्ग",
@@ -35,7 +35,7 @@
         "logout": "लॉगआउट",
         "welcome": "परत स्वागत आहे, {name}!"
     },
-    "dashboard": {
+    "launchpad": {
         "home": {
             "title": "परत स्वागत आहे, {name}!",
             "subtitle": "आज तुमच्या शाळेत काय घडत आहे ते येथे आहे.",

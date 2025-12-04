@@ -8,7 +8,7 @@
 
     // Set breadcrumb on mount
     onMount(() => {
-        breadcrumbs.set([{ label: "Settings", href: "/dashboard/settings" }]);
+        breadcrumbs.set([{ label: "Settings", href: "/launchpad/settings" }]);
     });
 
     const currentTheme = $derived($theme);

@@ -9,6 +9,7 @@ export interface User {
     phone?: string;
     customerId?: number;
     customerName?: string;
+    is_super_admin?: boolean;
 }
 
 interface AuthState {

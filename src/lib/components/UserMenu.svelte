@@ -56,7 +56,7 @@
 
     {#if showMenu}
         <div class="dropdown-menu">
-            <a href="/dashboard/profile" class="menu-item">
+            <a href="/launchpad/profile" class="menu-item">
                 <svg
                     xmlns="http://www.w3.org/2000/svg"
                     width="18"
@@ -73,7 +73,7 @@
                 </svg>
                 {$_("user.profile")}
             </a>
-            <a href="/dashboard/settings" class="menu-item">
+            <a href="/launchpad/settings" class="menu-item">
                 <svg
                     xmlns="http://www.w3.org/2000/svg"
                     width="18"

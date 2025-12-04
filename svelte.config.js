@@ -14,6 +14,14 @@ const config = {
 		adapter: adapter(),
 		experimental: {
 			remoteFunctions: true
+		},
+		csrf: {
+			trustedOrigins: [
+				"https://starlighterp.com",
+				"http://localhost:5173",
+				"http://localhost:4173",
+				"http://localhost:3000"
+			]
 		}
 	},
 	compilerOptions: {

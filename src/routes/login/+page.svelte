@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { login, register, selectCustomer } from "$lib/api.remote";
+    import { login, register, selectCustomer } from "$lib/api";
     import { goto } from "$app/navigation";
     import { auth } from "$lib/stores";
     import { _ } from "$lib/i18n";
@@ -53,11 +53,12 @@
                         name: result.user.name || result.user.username,
                         customerId: result.user.customerId,
                         customerName: result.user.customerName,
+                        is_super_admin: result.user.is_super_admin,
                     },
                     result.accessToken,
                 );
                 setTimeout(() => {
-                    goto("/dashboard");
+                    goto("/launchpad");
                 }, 1000);
             }
         } catch (error) {
@@ -120,11 +121,12 @@
                                 name: result.user.name || result.user.username,
                                 customerId: result.user.customerId,
                                 customerName: result.user.customerName,
+                                is_super_admin: result.user.is_super_admin,
                             },
                             result.accessToken,
                         );
                         setTimeout(() => {
-                            goto("/dashboard");
+                            goto("/launchpad");
                         }, 1000);
                     } else {
                         // Fallback: show success message and switch to login
@@ -158,11 +160,12 @@
                                 name: result.user.name || result.user.username,
                                 customerId: result.user.customerId,
                                 customerName: result.user.customerName,
+                                is_super_admin: result.user.is_super_admin,
                             },
                             result.accessToken,
                         );
                         setTimeout(() => {
-                            goto("/dashboard");
+                            goto("/launchpad");
                         }, 1000);
                     } else {
                         // Fallback for old API response format
@@ -176,7 +179,7 @@
                             result.accessToken || "",
                         );
                         setTimeout(() => {
-                            goto("/dashboard");
+                            goto("/launchpad");
                         }, 1000);
                     }
                 }

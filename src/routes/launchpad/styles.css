@@ -12,7 +12,7 @@ body {
 }
 
 /* Layout */
-.dashboard-container {
+.launchpad-container {
     display: flex;
     min-height: 100vh;
     width: 100%;
@@ -173,7 +173,7 @@ body {
 }
 
 /* Dashboard Widgets Grid */
-.dashboard-grid {
+.launchpad-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
     gap: 1.5rem;

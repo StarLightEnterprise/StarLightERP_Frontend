@@ -1,6 +1,6 @@
 {
     "nav": {
-        "dashboard": "ড্যাশবোর্ড",
+        "launchpad": "ড্যাশবোর্ড",
         "students": "ছাত্রছাত্রী",
         "teachers": "শিক্षক",
         "classes": "ক্লাস",
@@ -35,7 +35,7 @@
         "logout": "লগআউট",
         "welcome": "স্বাগতম, {name}!"
     },
-    "dashboard": {
+    "launchpad": {
         "home": {
             "title": "স্বাগতম, {name}!",
             "subtitle": "আজ আপনার স্কুলে কী ঘটছে তা এখানে।",

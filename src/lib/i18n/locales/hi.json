@@ -1,6 +1,6 @@
 {
     "nav": {
-        "dashboard": "डैशबोर्ड",
+        "launchpad": "डैशबोर्ड",
         "students": "छात्र",
         "teachers": "शिक्षक",
         "classes": "कक्षाएं",
@@ -35,7 +35,7 @@
         "logout": "लॉगआउट",
         "welcome": "वापसी पर स्वागत है, {name}!"
     },
-    "dashboard": {
+    "launchpad": {
         "home": {
             "title": "वापसी पर स्वागत है, {name}!",
             "subtitle": "आज आपके स्कूल में क्या हो रहा है।",

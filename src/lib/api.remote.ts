@@ -139,36 +139,8 @@ async function apiCall(endpoint: string, method: string, body?: object, token?: 
     }
 }
 
-export const login = command(
-    v.object({
-        username: v.string(),
-        password: v.string()
-    }),
-    async ({ username, password }) => {
-        return await apiCall('/api/auth/login', 'POST', { username, password });
-    }
-);
 
-export const register = command(
-    v.object({
-        username: v.string(),
-        password: v.string(),
-        email: v.string()
-    }),
-    async ({ username, password, email }) => {
-        return await apiCall('/api/auth/register', 'POST', { username, password, email });
-    }
-);
 
-export const selectCustomer = command(
-    v.object({
-        username: v.string(),
-        customerId: v.number()
-    }),
-    async ({ username, customerId }) => {
-        return await apiCall('/api/auth/select-customer', 'POST', { username, customerId });
-    }
-);
 
 export const logout = command(
     v.object({}),
