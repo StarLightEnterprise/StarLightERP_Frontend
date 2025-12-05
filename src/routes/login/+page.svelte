@@ -1,10 +1,10 @@
 <script lang="ts">
-    import { login, register, selectCustomer } from "$lib/api";
+    import { login, register, selectTenant } from "$lib/api";
     import { goto } from "$app/navigation";
     import { auth } from "$lib/stores";
     import { _ } from "$lib/i18n";
 
-    let mode = $state<"login" | "register" | "select-customer">("login");
+    let mode = $state<"login" | "register" | "select-tenant">("login");
     let username = $state("");
     let password = $state("");
     let confirmPassword = $state("");
@@ -13,21 +13,21 @@
     let success = $state(false);
     let loading = $state(false);
 
-    // Customer selection state
-    let customers = $state<any[]>([]);
-    let selectedCustomerId = $state<number | null>(null);
+    // Tenant selection state
+    let tenants = $state<any[]>([]);
+    let selectedTenantId = $state<number | null>(null);
 
     function toggleMode() {
         mode = mode === "login" ? "register" : "login";
         message = "";
         success = false;
-        customers = [];
-        selectedCustomerId = null;
+        tenants = [];
+        selectedTenantId = null;
     }
 
-    async function handleCustomerSelection() {
-        if (!selectedCustomerId) {
-            message = "Please select a customer";
+    async function handleTenantSelection() {
+        if (!selectedTenantId) {
+            message = "Please select a tenant";
             success = false;
             return;
         }
@@ -36,9 +36,9 @@
         message = "";
 
         try {
-            const result = await selectCustomer({
+            const result = await selectTenant({
                 username,
-                customerId: selectedCustomerId,
+                tenantId: selectedTenantId,
             });
 
             success = result.success;
@@ -51,8 +51,8 @@
                         email: result.user.email,
                         role: result.user.role || "User",
                         name: result.user.name || result.user.username,
-                        customerId: result.user.customerId,
-                        customerName: result.user.customerName,
+                        tenantId: result.user.tenantId,
+                        tenantName: result.user.tenantName,
                         is_super_admin: result.user.is_super_admin,
                     },
                     result.accessToken,
@@ -63,7 +63,7 @@
             }
         } catch (error) {
             success = false;
-            message = "An error occurred during customer selection.";
+            message = "An error occurred during tenant selection.";
             console.error(error);
         } finally {
             loading = false;
@@ -73,8 +73,8 @@
     async function handleSubmit(event: Event) {
         event.preventDefault();
 
-        if (mode === "select-customer") {
-            await handleCustomerSelection();
+        if (mode === "select-tenant") {
+            await handleTenantSelection();
             return;
         }
 
@@ -119,8 +119,8 @@
                                 email: result.user.email,
                                 role: result.user.role || "User",
                                 name: result.user.name || result.user.username,
-                                customerId: result.user.customerId,
-                                customerName: result.user.customerName,
+                                tenantId: result.user.tenantId,
+                                tenantName: result.user.tenantName,
                                 is_super_admin: result.user.is_super_admin,
                             },
                             result.accessToken,
@@ -141,25 +141,25 @@
                     }
                 } else {
                     // Login flow
-                    if (result.requiresCustomerSelection && result.customers) {
-                        // Multi-customer flow: switch to selection mode
-                        customers = result.customers;
-                        mode = "select-customer";
-                        // Pre-select primary customer if available
-                        const primary = customers.find((c) => c.isPrimary);
+                    if (result.requiresTenantSelection && result.tenants) {
+                        // Multi-tenant flow: switch to selection mode
+                        tenants = result.tenants;
+                        mode = "select-tenant";
+                        // Pre-select primary tenant if available
+                        const primary = tenants.find((t) => t.isPrimary);
                         if (primary) {
-                            selectedCustomerId = primary.customerId;
+                            selectedTenantId = primary.tenantId;
                         }
                     } else if (result.accessToken && result.user) {
-                        // Single customer or direct login
+                        // Single tenant or direct login
                         auth.login(
                             {
                                 username: result.user.username,
                                 email: result.user.email,
                                 role: result.user.role || "User",
                                 name: result.user.name || result.user.username,
-                                customerId: result.user.customerId,
-                                customerName: result.user.customerName,
+                                tenantId: result.user.tenantId,
+                                tenantName: result.user.tenantName,
                                 is_super_admin: result.user.is_super_admin,
                             },
                             result.accessToken,
@@ -207,39 +207,39 @@
                 {:else if mode === "register"}
                     Create Account
                 {:else}
-                    Select Customer
+                    Select Tenant
                 {/if}
             </p>
         </div>
 
         <form onsubmit={handleSubmit} class="login-form">
-            {#if mode === "select-customer"}
-                <div class="customer-list">
-                    {#each customers as customer}
+            {#if mode === "select-tenant"}
+                <div class="tenant-list">
+                    {#each tenants as tenant}
                         <label
-                            class="customer-card {selectedCustomerId ===
-                            customer.customerId
+                            class="tenant-card {selectedTenantId ===
+                            tenant.tenantId
                                 ? 'selected'
                                 : ''}"
                         >
                             <input
                                 type="radio"
-                                name="customer"
-                                value={customer.customerId}
-                                bind:group={selectedCustomerId}
+                                name="tenant"
+                                value={tenant.tenantId}
+                                bind:group={selectedTenantId}
                             />
-                            <div class="customer-info">
-                                <div class="customer-name">
-                                    {customer.customerName}
+                            <div class="tenant-info">
+                                <div class="tenant-name">
+                                    {tenant.tenantName}
                                 </div>
-                                <div class="customer-details">
+                                <div class="tenant-details">
                                     <span class="badge category"
-                                        >{customer.customerCategory}</span
+                                        >{tenant.tenantCategory}</span
                                     >
                                     <span class="badge type"
-                                        >{customer.customerType}</span
+                                        >{tenant.tenantType}</span
                                     >
-                                    {#if customer.isPrimary}
+                                    {#if tenant.isPrimary}
                                         <span class="badge primary"
                                             >Primary</span
                                         >
@@ -348,7 +348,7 @@
                 </div>
             {/if}
 
-            {#if mode !== "select-customer"}
+            {#if mode !== "select-tenant"}
                 <div class="mode-toggle">
                     <button
                         type="button"
@@ -597,8 +597,8 @@
         cursor: not-allowed;
     }
 
-    /* Customer Selection Styles */
-    .customer-list {
+    /* Tenant Selection Styles */
+    .tenant-list {
         display: flex;
         flex-direction: column;
         gap: 12px;
@@ -606,7 +606,7 @@
         overflow-y: auto;
     }
 
-    .customer-card {
+    .tenant-card {
         display: flex;
         align-items: center;
         gap: 12px;
@@ -617,35 +617,35 @@
         transition: all 0.2s;
     }
 
-    .customer-card:hover {
+    .tenant-card:hover {
         border-color: #2ba3b4;
         background-color: #f0f8fa;
     }
 
-    .customer-card.selected {
+    .tenant-card.selected {
         border-color: #1a7a8a;
         background-color: #e6f2f5;
         box-shadow: 0 0 0 1px #1a7a8a;
     }
 
-    .customer-card input[type="radio"] {
+    .tenant-card input[type="radio"] {
         margin: 0;
         height: 16px;
         width: 16px;
     }
 
-    .customer-info {
+    .tenant-info {
         display: flex;
         flex-direction: column;
         gap: 4px;
     }
 
-    .customer-name {
+    .tenant-name {
         font-weight: 600;
         color: #32363a;
     }
 
-    .customer-details {
+    .tenant-details {
         display: flex;
         gap: 6px;
         flex-wrap: wrap;
@@ -702,7 +702,7 @@
             gap: 20px;
         }
 
-        .customer-list {
+        .tenant-list {
             max-height: 250px;
         }
     }

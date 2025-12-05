@@ -7,8 +7,8 @@ export interface User {
     role: string;
     name?: string;
     phone?: string;
-    customerId?: number;
-    customerName?: string;
+    tenantId?: number;
+    tenantName?: string;
     is_super_admin?: boolean;
 }
 

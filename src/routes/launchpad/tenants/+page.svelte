@@ -5,16 +5,16 @@
     import { _ } from "$lib/i18n";
     import { BACKEND_URL } from "$lib/config";
 
-    let customers = $state<any[]>([]);
+    let tenants = $state<any[]>([]);
     let loading = $state(false);
     let error = $state("");
     let showCreateForm = $state(false);
-    let editingCustomer = $state<any>(null);
+    let editingTenant = $state<any>(null);
 
     // Form fields
-    let customerName = $state("");
-    let customerCategory = $state("School");
-    let customerType = $state("Primary");
+    let tenantName = $state("");
+    let tenantCategory = $state("School");
+    let tenantType = $state("Primary");
     let email = $state("");
     let phone = $state("");
     let isActive = $state(true);
@@ -27,16 +27,16 @@
             return;
         }
 
-        breadcrumbs.set([{ label: "Customers", href: "/launchpad/customers" }]);
-        await loadCustomers();
+        breadcrumbs.set([{ label: "Tenants", href: "/launchpad/tenants" }]);
+        await loadTenants();
     });
 
-    async function loadCustomers() {
+    async function loadTenants() {
         loading = true;
         error = "";
 
         try {
-            const response = await fetch(`${BACKEND_URL}/api/customers`, {
+            const response = await fetch(`${BACKEND_URL}/api/tenants`, {
                 headers: {
                     Authorization: `Bearer ${$auth.accessToken}`,
                 },
@@ -45,9 +45,9 @@
             const data = await response.json();
 
             if (data.success) {
-                customers = data.customers || [];
+                tenants = data.tenants || [];
             } else {
-                error = data.message || "Failed to load customers";
+                error = data.message || "Failed to load tenants";
             }
         } catch (err) {
             error = "Network error occurred";
@@ -58,29 +58,29 @@
     }
 
     function resetForm() {
-        customerName = "";
-        customerCategory = "School";
-        customerType = "Primary";
+        tenantName = "";
+        tenantCategory = "School";
+        tenantType = "Primary";
         email = "";
         phone = "";
         isActive = true;
-        editingCustomer = null;
+        editingTenant = null;
     }
 
-    function startEdit(customer: any) {
-        editingCustomer = customer;
-        customerName = customer.customer_name;
-        customerCategory = customer.customer_category;
-        customerType = customer.customer_type;
-        email = customer.email;
-        phone = customer.phone || "";
-        isActive = customer.is_active;
+    function startEdit(tenant: any) {
+        editingTenant = tenant;
+        tenantName = tenant.tenant_name;
+        tenantCategory = tenant.tenant_category;
+        tenantType = tenant.tenant_type;
+        email = tenant.email;
+        phone = tenant.phone || "";
+        isActive = tenant.is_active;
         showCreateForm = true;
     }
 
-    async function saveCustomer() {
-        if (!customerName || !email) {
-            error = "Customer name and email are required";
+    async function saveTenant() {
+        if (!tenantName || !email) {
+            error = "Tenant name and email are required";
             return;
         }
 
@@ -89,20 +89,20 @@
 
         try {
             const payload = {
-                customer_name: customerName,
-                customer_category: customerCategory,
-                customer_type: customerType,
+                tenant_name: tenantName,
+                tenant_category: tenantCategory,
+                tenant_type: tenantType,
                 email,
                 phone: phone || null,
                 is_active: isActive,
             };
 
-            const url = editingCustomer
-                ? `${BACKEND_URL}/api/customers/${editingCustomer.customer_id}`
-                : `${BACKEND_URL}/api/customers`;
+            const url = editingTenant
+                ? `${BACKEND_URL}/api/tenants/${editingTenant.tenant_id}`
+                : `${BACKEND_URL}/api/tenants`;
 
             const response = await fetch(url, {
-                method: editingCustomer ? "PUT" : "POST",
+                method: editingTenant ? "PUT" : "POST",
                 headers: {
                     "Content-Type": "application/json",
                     Authorization: `Bearer ${$auth.accessToken}`,
@@ -115,11 +115,11 @@
             if (data.success) {
                 resetForm();
                 showCreateForm = false;
-                await loadCustomers();
+                await loadTenants();
             } else {
                 error =
                     data.message ||
-                    `Failed to ${editingCustomer ? "update" : "create"} customer`;
+                    `Failed to ${editingTenant ? "update" : "create"} tenant`;
             }
         } catch (err) {
             error = "Network error occurred";
@@ -129,8 +129,8 @@
         }
     }
 
-    async function deleteCustomer(customerId: number) {
-        if (!confirm("Are you sure you want to delete this customer?")) {
+    async function deleteTenant(tenantId: number) {
+        if (!confirm("Are you sure you want to delete this tenant?")) {
             return;
         }
 
@@ -139,7 +139,7 @@
 
         try {
             const response = await fetch(
-                `${BACKEND_URL}/api/customers/${customerId}`,
+                `${BACKEND_URL}/api/tenants/${tenantId}`,
                 {
                     method: "DELETE",
                     headers: {
@@ -151,9 +151,9 @@
             const data = await response.json();
 
             if (data.success) {
-                await loadCustomers();
+                await loadTenants();
             } else {
-                error = data.message || "Failed to delete customer";
+                error = data.message || "Failed to delete tenant";
             }
         } catch (err) {
             error = "Network error occurred";
@@ -169,9 +169,9 @@
     }
 </script>
 
-<div class="customers-container">
+<div class="tenants-container">
     <div class="header">
-        <h1>Customer Management</h1>
+        <h1>Tenant Management</h1>
         <button
             class="btn-primary"
             onclick={() => {
@@ -179,7 +179,7 @@
                 showCreateForm = !showCreateForm;
             }}
         >
-            {showCreateForm ? "Cancel" : "+ Create Customer"}
+            {showCreateForm ? "Cancel" : "+ Create Tenant"}
         </button>
     </div>
 
@@ -189,15 +189,15 @@
 
     {#if showCreateForm}
         <div class="create-form">
-            <h2>{editingCustomer ? "Edit" : "Create"} Customer</h2>
+            <h2>{editingTenant ? "Edit" : "Create"} Tenant</h2>
             <div class="form-grid">
                 <div class="form-group">
-                    <label for="customerName">Customer Name *</label>
+                    <label for="tenantName">Tenant Name *</label>
                     <input
                         type="text"
-                        id="customerName"
-                        bind:value={customerName}
-                        placeholder="Enter customer name"
+                        id="tenantName"
+                        bind:value={tenantName}
+                        placeholder="Enter tenant name"
                     />
                 </div>
                 <div class="form-group">
@@ -220,7 +220,7 @@
                 </div>
                 <div class="form-group">
                     <label for="category">Category</label>
-                    <select id="category" bind:value={customerCategory}>
+                    <select id="category" bind:value={tenantCategory}>
                         <option value="School">School</option>
                         <option value="College">College</option>
                         <option value="University">University</option>
@@ -229,7 +229,7 @@
                 </div>
                 <div class="form-group">
                     <label for="type">Type</label>
-                    <select id="type" bind:value={customerType}>
+                    <select id="type" bind:value={tenantType}>
                         <option value="Primary">Primary</option>
                         <option value="Secondary">Secondary</option>
                         <option value="Higher Secondary"
@@ -251,16 +251,16 @@
             <div class="form-actions">
                 <button
                     class="btn-primary"
-                    onclick={saveCustomer}
+                    onclick={saveTenant}
                     disabled={loading}
                 >
                     {loading
                         ? "Saving..."
-                        : editingCustomer
+                        : editingTenant
                           ? "Update"
-                          : "Create"} Customer
+                          : "Create"} Tenant
                 </button>
-                {#if editingCustomer}
+                {#if editingTenant}
                     <button class="btn-secondary" onclick={cancelEdit}>
                         Cancel
                     </button>
@@ -269,14 +269,14 @@
         </div>
     {/if}
 
-    {#if loading && customers.length === 0}
-        <div class="loading">Loading customers...</div>
+    {#if loading && tenants.length === 0}
+        <div class="loading">Loading tenants...</div>
     {:else}
-        <div class="customers-table">
+        <div class="tenants-table">
             <table>
                 <thead>
                     <tr>
-                        <th>Customer Name</th>
+                        <th>Tenant Name</th>
                         <th>Email</th>
                         <th>Phone</th>
                         <th>Category</th>
@@ -286,35 +286,35 @@
                     </tr>
                 </thead>
                 <tbody>
-                    {#each customers as customer}
+                    {#each tenants as tenant}
                         <tr>
-                            <td>{customer.customer_name}</td>
-                            <td>{customer.email}</td>
-                            <td>{customer.phone || "-"}</td>
+                            <td>{tenant.tenant_name}</td>
+                            <td>{tenant.email}</td>
+                            <td>{tenant.phone || "-"}</td>
                             <td>
                                 <span class="badge"
-                                    >{customer.customer_category}</span
+                                    >{tenant.tenant_category}</span
                                 >
                             </td>
                             <td>
                                 <span class="badge secondary"
-                                    >{customer.customer_type}</span
+                                    >{tenant.tenant_type}</span
                                 >
                             </td>
                             <td>
                                 <span
-                                    class="status {customer.is_active
+                                    class="status {tenant.is_active
                                         ? 'active'
                                         : 'inactive'}"
                                 >
-                                    {customer.is_active ? "Active" : "Inactive"}
+                                    {tenant.is_active ? "Active" : "Inactive"}
                                 </span>
                             </td>
                             <td>
                                 <div class="actions">
                                     <button
                                         class="btn-edit"
-                                        onclick={() => startEdit(customer)}
+                                        onclick={() => startEdit(tenant)}
                                         disabled={loading}
                                     >
                                         Edit
@@ -322,9 +322,7 @@
                                     <button
                                         class="btn-danger"
                                         onclick={() =>
-                                            deleteCustomer(
-                                                customer.customer_id,
-                                            )}
+                                            deleteTenant(tenant.tenant_id)}
                                         disabled={loading}
                                     >
                                         Delete
@@ -335,15 +333,15 @@
                     {/each}
                 </tbody>
             </table>
-            {#if customers.length === 0}
-                <div class="empty-state">No customers found</div>
+            {#if tenants.length === 0}
+                <div class="empty-state">No tenants found</div>
             {/if}
         </div>
     {/if}
 </div>
 
 <style>
-    .customers-container {
+    .tenants-container {
         padding: 2rem;
         max-width: 1400px;
         margin: 0 auto;
@@ -510,7 +508,7 @@
         border-color: var(--color-primary);
     }
 
-    .customers-table {
+    .tenants-table {
         background: var(--color-bg-paper);
         border-radius: 12px;
         overflow: hidden;
@@ -591,7 +589,7 @@
     }
 
     @media (max-width: 768px) {
-        .customers-container {
+        .tenants-container {
             padding: 1rem;
         }
 
@@ -605,7 +603,7 @@
             grid-template-columns: 1fr;
         }
 
-        .customers-table {
+        .tenants-table {
             overflow-x: auto;
         }
 

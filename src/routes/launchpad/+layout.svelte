@@ -23,7 +23,7 @@
     // Map app_id to route - now using sub-routes of launchpad
     const appRoutes: Record<string, string> = {
         A000001: "/launchpad/users",
-        A000002: "/launchpad/customers",
+        A000002: "/launchpad/tenants",
     };
 
     // Map app_id to icon SVG
@@ -50,7 +50,7 @@
             const headers: HeadersInit = {
                 "Content-Type": "application/json",
             };
-            
+
             if (token) {
                 headers["Authorization"] = `Bearer ${token}`;
             }

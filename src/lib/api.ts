@@ -30,18 +30,18 @@ export const register = async ({ username, password, email }: { username: string
     }
 };
 
-export const selectCustomer = async ({ username, customerId }: { username: string; customerId: number }) => {
+export const selectTenant = async ({ username, tenantId }: { username: string; tenantId: number }) => {
     try {
-        const response = await fetch('/api/proxy/auth/select-customer', {
+        const response = await fetch('/api/proxy/auth/select-tenant', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({ username, customerId })
+            body: JSON.stringify({ username, tenantId })
         });
         return await response.json();
     } catch (error) {
-        console.error('Select Customer Error:', error);
-        return { success: false, message: 'Network error during customer selection' };
+        console.error('Select Tenant Error:', error);
+        return { success: false, message: 'Network error during tenant selection' };
     }
 };
